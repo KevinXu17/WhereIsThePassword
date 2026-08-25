@@ -74,6 +74,8 @@ implementation pass. Revisit once the sources above are working.
 | Hover/focus-revealed menus                            | Dropdown items inserted into the DOM only on`:hover`/`:focus` (not just CSS-hidden) | Playwright: hover/focus each nav trigger and re-scan DOM for newly-inserted elements                                                            |
 | Tab / accordion / modal-revealed content              | Content (and its links) that only exists in the DOM after a click                   | Playwright: click each tab/accordion header/modal trigger and re-scan DOM after each                                                            |
 | `postMessage`-driven cross-frame navigation           | Parent/iframe coordinating via`postMessage` instead of a `src` change               | Playwright: listen for`postMessage` events and track resulting frame/URL changes                                                                |
+| Hash-based (`#!/path`) routing                        | URL fragment identifier — older SPA routers (Angular 1.x-style, Backbone) that route on `location.hash` instead of `history.pushState` | Listen for `hashchange` events in addition to the `popstate` listener already planned for the pushState case |
+| Non-click interactive triggers                        | `<select onchange>` (locale/nav dropdowns), `<form onsubmit>`, keypress-triggered nav (Enter in a search box) | Generalize the JS click row — trigger `change`/`submit`/`keydown` events too, not just `click` |
 
 ## 3. Password Extraction Vectors
 
@@ -94,11 +96,32 @@ Where in the server's response a `VISUALPING{...}` token might live.
 | 3.9 | Structured data | `<script type="application/ld+json">` (schema.org markup) | Parse and regex scan JSON-LD blocks |
 | 3.10 | Non-rendered text attributes | `alt`, `title`, `aria-*`, `placeholder` — present in DOM/accessibility tree but not visible rendered text | Regex scan these specific attributes across all elements, not just `innerText` |
 | 3.11 | Background XHR/fetch responses | JSON/text bodies of API calls fired during page load or interaction, **excluding** asset types already claimed by their own vector (JS 3.5, CSS 3.4, images 3.14, source maps 3.16, manifest 3.17) | Playwright `page.on('response')`; regex scan any response body not already covered by a dedicated vector row, keyed by originating request |
-| 3.14 | Image metadata | EXIF fields in `<img>`/downloaded image files | Fetch images, parse EXIF via `Pillow`/`exifread`, regex scan text fields. **IPTC/XMP fields need a different library** (e.g. `iptcinfo3`, `pyexiv2`) — `Pillow`/`exifread` don't read them; add that dependency if we want full coverage, otherwise scope this row to EXIF only |
+| 3.14 | Image metadata | Format-specific embedded text fields in `<img>`/downloaded image files — see breakdown below, metadata layout differs per file format | See breakdown below |
 | 3.16 | Source map files | `//# sourceMappingURL=` comment at the end of a `.js`/`.css` file **or** the `SourceMap`/`X-SourceMap` HTTP response header, either of which can point to a `.map` file that embeds original unminified source | Check both the trailing comment and the response headers for the map URL; fetch the `.map` file and regex scan its `sourcesContent` |
 | 3.17 | Web app manifest | `manifest.json` linked via `<link rel="manifest">` (see §2.6) | Fetch and regex scan the manifest JSON body itself, not just the URLs it lists |
 | 3.18 | Non-200 / error pages | Custom 4xx/5xx error page bodies — easy to skip if the crawler treats non-2xx as "nothing here" | Scan error response bodies the same as 3.2 instead of discarding on non-2xx status |
 | 3.19 | Rendered text in an image | Banner/badge PNG/JPG (`<img>` or background-image assets) — password drawn as pixels, not characters | Fetch image, run OCR (`pytesseract`) with a character whitelist (`VISUALPING{}0-9a-fA-F`) and image preprocessing (upscale/threshold) to reduce `0`/`O`/`1`/`l`/`I` misreads, regex scan the extracted text |
+| 3.27 | URL string itself | Path segments, query-string values, and fragment of every discovered URL (e.g. `/secret/VISUALPING{...}`, `?token=...`) | Regex scan the URL string at enqueue time, before even fetching it |
+| 3.28 | HTTP status line reason phrase | The custom text after the status code (`200 VISUALPING{...}` instead of `200 OK`) — servers can set this arbitrarily | Read `response.statusText()` on every response; regex scan it the same as headers (3.1) |
+
+##### 3.14 breakdown — image metadata by format
+
+Metadata isn't stored the same way across image formats; each one needs
+its own field(s) and, sometimes, its own accessor even within one library.
+
+| Format | Metadata field(s) | Extraction method |
+|---|---|---|
+| JPEG | EXIF (APP1) — `UserComment`, `ImageDescription`, `Copyright`, `Artist`, `Software`, GPS tags | `Pillow` `img.getexif()`; regex scan every string-valued tag |
+| JPEG | COM marker — free-text comment, a **separate** segment from EXIF | `Pillow` `img.info.get('comment')` — easy to miss if only `getexif()` is wired up |
+| JPEG | IPTC (APP13 Photoshop IRB) — `Caption`, `Keywords`, `Credit` | `iptcinfo3` — `Pillow`/`exifread` don't read this |
+| JPEG / PNG / WebP | XMP — arbitrary custom XML key-values, embedded as a literal XML text packet | No special library needed — it's plain text in the file; a raw-bytes regex scan (3.25) over the file catches it directly |
+| PNG | `tEXt`/`zTXt`/`iTXt` chunks — key-value text pairs (`Comment`, `Description`, `Software`, or arbitrary custom keys) | `Pillow` `img.text` / `img.info` — different code path than EXIF |
+| PNG | `eXIf` chunk (PNG spec v1.2+, holds real EXIF data) | `Pillow` `img.getexif()` (Pillow ≥ 6.0) |
+| GIF | Comment Extension block (`0x21 0xFE`) | `Pillow` `img.info.get('comment')` |
+| WebP | EXIF chunk (RIFF `EXIF` chunk) | `Pillow` `img.getexif()` |
+| TIFF | Native EXIF-style tags (same tag system as JPEG EXIF) | `Pillow` `img.getexif()` |
+| BMP | No standard embedded-metadata mechanism | N/A — skip |
+| SVG | `<title>`, `<desc>`, XML comments, custom attributes — it's already plain text/XML, not a binary format | No image-specific tooling — treat as a text/XML file and run the same raw-text regex scan already used for HTML/CSS (3.3/3.4) |
 
 > **#JOBS** — triage the remaining untriaged vectors above: confirm the
 > expected **format** and whether the regex needs to run against raw bytes
