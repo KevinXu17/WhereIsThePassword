@@ -51,7 +51,6 @@ that a plain HTML/`<a>` parser would miss.
 | `<iframe src>`                               | Embedded frames                                                                                                                                      | Parse`src` attribute; recurse into frame's own DOM via Playwright's `frame` objects                                                |
 | Redirects                                    | 3xx`Location` header, `<meta http-equiv="refresh">`, JS `location.href`/`location.assign()`/`window.open()`                                          | Follow via Playwright navigation; also inspect raw response headers and HTML/JS source for the redirect target before following it |
 | Background XHR /`fetch()` calls              | Requests fired on page load or on interaction (API endpoints, often returning JSON with further links/IDs)                                           | Playwright network interception (`page.on('request'/'response')`); parse JSON bodies for URL-shaped strings                        |
-| `<link>` tags                                | `rel="stylesheet"`, `alternate`, `prefetch`, `canonical`, `next`/`prev`, `manifest`                                                                  | Parse`href` attribute of every `<link>` in `<head>`; for `rel="manifest"`, also fetch and parse the JSON (e.g. `start_url`)        |
 | `<button formaction>` / `<input formaction>` | Submit buttons/inputs that override their parent`<form action>`                                                                                      | Parse`formaction` attribute on submit controls inside `<form>`; submit via that control specifically                               |
 | Dynamically rendered / lazy-loaded content   | Infinite scroll, "load more" buttons,`IntersectionObserver`-triggered fetches                                                                        | Playwright: scroll to bottom / click "load more" and re-scan DOM after each trigger, until no new elements appear                  |
 
@@ -66,6 +65,7 @@ implementation pass. Revisit once the sources above are working.
 | `<script src>`                                        | External JS bundles                                                                 | Parse`src` attribute — fetch and scan file (also feeds §3.5 password scan); string-literal URLs inside the JS itself are a secondary source   |
 | CSS`url()` / `@import`                                | Inline`<style>`, linked `.css` files                                                | Regex/parse`url(...)`/`@import` for background images, fonts, imported stylesheets                                                              |
 | `<img>`/`<source>`/`<video>`/`<audio>` `src`/`srcset` | Media elements                                                                      | Parse`src`/`srcset` attributes — not navigable pages, but resources to fetch and scan (§3)                                                    |
+| `<link>` tags                                          | `rel="stylesheet"`, `alternate`, `prefetch`, `canonical`, `next`/`prev`, `manifest`  | Parse`href` attribute of every `<link>` in `<head>`; for `rel="manifest"`, also fetch and parse the JSON (e.g. `start_url`, feeds 3.17)         |
 | HTTP`Link` response header                            | Raw response headers (RFC 8288,`rel="next"`, `canonical`, etc.)                     | Parse`Link:` header on every response, not just the HTML body                                                                                   |
 | Shadow DOM content                                    | Web components (`<template shadowroot>`, custom elements)                           | Playwright's`page.locator()` pierces open shadow roots by default — make sure the DOM scan doesn't skip them                                   |
 | `<area href>`                                         | Image-map links                                                                     | Parse`<map><area>` elements — same handling as `<a href>`                                                                                      |
@@ -95,10 +95,9 @@ Where in the server's response a `VISUALPING{...}` token might live.
 | 3.8 | Embedded JSON state blobs | Framework hydration data — `window.__INITIAL_STATE__`, `<script type="application/json">` (e.g. Next.js `__NEXT_DATA__`), Redux/GraphQL cache dumps | Parse `<script type="application/json">` contents and known global-variable names via `page.evaluate`; regex scan the JSON text |
 | 3.9 | Structured data | `<script type="application/ld+json">` (schema.org markup) | Parse and regex scan JSON-LD blocks |
 | 3.10 | Non-rendered text attributes | `alt`, `title`, `aria-*`, `placeholder` — present in DOM/accessibility tree but not visible rendered text | Regex scan these specific attributes across all elements, not just `innerText` |
-| 3.11 | Background XHR/fetch responses | JSON/text bodies of API calls fired during page load or interaction, **excluding** asset types already claimed by their own vector (JS 3.5, CSS 3.4, images 3.14, source maps 3.16, manifest 3.17) | Playwright `page.on('response')`; regex scan any response body not already covered by a dedicated vector row, keyed by originating request |
+| 3.11 | Background XHR/fetch responses | JSON/text bodies of API calls fired during page load or interaction, **excluding** asset types already claimed by their own vector (JS 3.5, CSS 3.4, images 3.14, source maps 3.16) | Playwright `page.on('response')`; regex scan any response body not already covered by a dedicated vector row, keyed by originating request |
 | 3.14 | Image metadata | Format-specific embedded text fields in `<img>`/downloaded image files — see breakdown below, metadata layout differs per file format | See breakdown below |
 | 3.16 | Source map files | `//# sourceMappingURL=` comment at the end of a `.js`/`.css` file **or** the `SourceMap`/`X-SourceMap` HTTP response header, either of which can point to a `.map` file that embeds original unminified source | Check both the trailing comment and the response headers for the map URL; fetch the `.map` file and regex scan its `sourcesContent` |
-| 3.17 | Web app manifest | `manifest.json` linked via `<link rel="manifest">` (see §2.6) | Fetch and regex scan the manifest JSON body itself, not just the URLs it lists |
 | 3.18 | Non-200 / error pages | Custom 4xx/5xx error page bodies — easy to skip if the crawler treats non-2xx as "nothing here" | Scan error response bodies the same as 3.2 instead of discarding on non-2xx status |
 | 3.19 | Rendered text in an image | Banner/badge PNG/JPG (`<img>` or background-image assets) — password drawn as pixels, not characters | Fetch image, run OCR (`pytesseract`) with a character whitelist (`VISUALPING{}0-9a-fA-F`) and image preprocessing (upscale/threshold) to reduce `0`/`O`/`1`/`l`/`I` misreads, regex scan the extracted text |
 | 3.27 | URL string itself | Path segments, query-string values, and fragment of every discovered URL (e.g. `/secret/VISUALPING{...}`, `?token=...`) | Regex scan the URL string at enqueue time, before even fetching it |
@@ -137,6 +136,7 @@ implementation pass. Revisit once the vectors above are working.
 | 3.12 | WebSocket messages | Frames sent/received over `ws://`/`wss://` connections | Playwright `page.on('websocket')` + frame-received/sent listeners; regex scan payload text |
 | 3.13 | Downloadable files | Linked non-HTML documents (PDF, TXT, CSV, DOCX, ZIP) | Fetch and extract text and metadata (e.g. PDF `Author`/`Producer` fields); regex scan extracted content |
 | 3.15 | QR codes / encoded images | Data visually encoded in an image rather than stored as text | Decode QR/barcodes (e.g. `pyzbar`) from fetched images; regex scan decoded text |
+| 3.17 | Web app manifest | `manifest.json` linked via `<link rel="manifest">` (see §2.6, also postponed) | Fetch and regex scan the manifest JSON body itself, not just the URLs it lists |
 | 3.20 | Canvas-drawn text | `<canvas>` elements (`fillText`/`strokeText`, no DOM text node) | Screenshot the canvas region and OCR it, or instrument/intercept `fillText` calls via `page.evaluate` |
 | 3.21 | Custom web-font glyph substitution | `@font-face` with remapped `unicode-range` — copied/parsed DOM text ≠ what's visually rendered | Screenshot + OCR the element and compare against its raw `textContent`; trust OCR when they diverge |
 | 3.22 | SVG text-as-paths | `<path>` shapes forming letters, no real `<text>` node | Screenshot + OCR, since there's no text node to parse |
@@ -164,14 +164,14 @@ Every visited resource is logged with:
 - **Language:** Python
 - **Dependencies (active — needed for the current §3 vectors):**
   - `playwright` — browser automation: rendering, click-through nav, network
-    interception (3.1–3.3, 3.6–3.11, 3.17, 3.18), screenshots (3.19)
+    interception (3.1–3.3, 3.6–3.11, 3.18), screenshots (3.19)
   - `python-dotenv` — loads credentials from `.env`, keeps them out of git
   - `Pillow` — image decoding, EXIF metadata (3.14), preprocessing
     (upscale/threshold) before OCR (3.19)
   - `pytesseract` — OCR for rendered text in images (3.19); requires the
     Tesseract OCR binary installed on the host (not a pip package)
-  - stdlib `re`/`json` cover regex scanning and JSON parsing (3.2–3.11,
-    3.17) — no extra dependency needed
+  - stdlib `re`/`json` cover regex scanning and JSON parsing (3.2–3.11)
+    — no extra dependency needed
 
 - **Dependencies (postponed — only needed if/when the corresponding §3
   postponed vector is activated):**
