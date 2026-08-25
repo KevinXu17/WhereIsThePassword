@@ -253,10 +253,6 @@ its own field(s) and, sometimes, its own accessor even within one library.
 - Metadata field(s): `<title>`, `<desc>`, XML comments, custom attributes — it's already plain text/XML, not a binary format
 - Extraction method: No image-specific tooling — treat as a text/XML file and run the same raw-text regex scan already used for HTML/CSS (3.3/3.4)
 
-> **#JOBS** — triage the remaining untriaged vectors above: confirm the
-> expected **format** and whether the regex needs to run against raw bytes
-> vs. rendered DOM vs. decoded content (e.g. base64, JSON-escaped strings).
-
 #### Postponed — future development
 
 Recognized as valid extraction vectors but deprioritized for the first
@@ -350,10 +346,3 @@ Every visited resource is logged with:
   - `stegano` — LSB steganography extraction (3.24)
   - `iptcinfo3` or `pyexiv2` — IPTC/XMP metadata, only if full coverage on
     3.14 is needed beyond the EXIF that `Pillow`/`exifread` already give us
-
-## 6. Open Items (JOBS)
-
-- [ ]  §2.6 — enumerate and finalize all link-discovery sources beyond `<a>`
-  (forms, JS click events, redirects, iframes, background XHR, etc.)
-- [ ]  §3 — enumerate and finalize all password-extraction vectors, with
-  exact locations, expected formats, and detection method per vector
