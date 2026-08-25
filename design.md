@@ -311,14 +311,70 @@ implementation pass. Revisit once the vectors above are working.
 Every visited resource is logged with:
 
 
-| Field            | Description                                      |
-| ---------------- | ------------------------------------------------ |
-| `timestamp`      | When the resource was fetched                    |
-| `resource`       | URL / asset fetched                              |
-| `vector`         | Which extraction vector was checked (§3)        |
-| `url_path`       | Path component                                   |
-| `status`         | HTTP status code / outcome                       |
-| `password_found` | Password string if a match was found, else empty |
+| Field              | Description                                                     |
+| ------------------ | ---------------------------------------------------------------- |
+| `timestamp`        | When the resource was fetched                                    |
+| `resource`         | URL / asset fetched                                               |
+| `vector`           | Which extraction vector was checked (§3)                        |
+| `url_path`         | Path component                                                    |
+| `status`           | HTTP status code / outcome                                        |
+| `password_found`   | Password string if a match was found, else empty                  |
+| `postponed_signals` | Postponed §3 vector IDs whose *presence condition* was detected on this resource (§4.1), e.g. `["3.20", "3.23"]` — empty list if none |
+
+### 4.1 Postponed-vector applicability signals
+
+We don't run the full (expensive) extraction logic for a postponed §3
+vector, but we can cheaply check whether its *trigger condition* exists
+on a page — no OCR, no decoding, no extra network calls beyond what the
+crawl already fetches. Log a hit into `postponed_signals` whenever the
+condition is seen. After the crawl, tally hits per vector across the
+audit log: any postponed vector with real hits is a concrete candidate
+to promote into the active table in §3; one with zero hits across the
+whole crawl is evidence it isn't needed for this target.
+
+**3.12 — WebSocket messages**
+- Signal: a WebSocket connection was opened on this page at all (`page.on('websocket')` fired)
+- Cost: free — just observe the event, don't parse frame contents
+
+**3.13 — Downloadable files**
+- Signal: a linked resource's `Content-Type`/extension is PDF/TXT/CSV/DOCX/ZIP
+- Cost: free — already visible from response headers the crawl inspects anyway (§3.1)
+
+**3.15 — QR codes / encoded images**
+- Signal: page contains any `<img>` at all (§3.14/§3.19 already enumerate these)
+- Cost: free, but **weak** — presence of *an* image doesn't mean it's a QR code; treat a nonzero count as "worth manually sampling a few," not a precise trigger
+
+**3.17 — Web app manifest**
+- Signal: `<link rel="manifest">` present in `<head>` (§2.6, postponed)
+- Cost: free — tag presence needs no fetch; confirming its JSON body is a single small extra request if you want to go further
+
+**3.20 — Canvas-drawn text**
+- Signal: DOM contains one or more `<canvas>` elements (`document.querySelectorAll('canvas').length > 0`)
+- Cost: free — one DOM query per page via `page.evaluate`
+
+**3.21 — Custom web-font glyph substitution**
+- Signal: any fetched CSS contains `@font-face` with a `unicode-range` descriptor
+- Cost: free — regex over CSS text already fetched for §3.4, no extra request
+
+**3.22 — SVG text-as-paths**
+- Signal: DOM contains inline `<svg>` with `<path>` children but no `<text>`/`<tspan>` descendant
+- Cost: free — one DOM query per page
+
+**3.23 — Audio-encoded password**
+- Signal: page contains `<audio src>` or links to an audio file extension (`.mp3`/`.wav`/`.ogg`/`.m4a`)
+- Cost: free — same header/extension check pattern as 3.13
+
+**3.24 — Steganography in image pixel data**
+- Signal: none reliable — every image is a hypothetical candidate, so presence alone is meaningless as a promotion trigger
+- Recommendation: don't promote from a signal; only justified as a manual last resort on a specific page already confirmed (via ground truth) to hold a password that no other vector — including 3.15 — found
+
+**3.25 — Strings inside binary files**
+- Signal: a fetched resource returned a binary `Content-Type` (font, `.ico`, `.wasm`) not already claimed by another vector
+- Cost: free — content-type is already known from the response
+
+**3.26 — Full-page screenshot + OCR**
+- Signal: none presence-based — it's the general catch-all, always "applicable" everywhere
+- Recommendation: same as 3.24 — promote only as a miss-driven fallback (a page the crawl reached, where §1's ground truth says a password must be reachable, but **no** vector — active or otherwise-promoted-postponed — found a match there), not from a presence signal
 
 ## 5. Engineering Constraints
 
