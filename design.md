@@ -149,8 +149,8 @@ Where in the server's response a `VISUALPING{...}` token might live.
 - Detection method: Regex scan the raw bytes/text of the main navigation response before the browser parses/renders it — catches tokens that never make it into the DOM
 
 **3.3 — HTML**
-- Where: Comments, `data-*` attributes, hidden inputs/elements, `<meta>` tags
-- Detection method: Parse the full HTML document (not `innerText`); regex scan comments, all attribute values, and hidden (`display:none`/`type=hidden`) elements
+- Where: Comments, `data-*` attributes, hidden inputs/elements, `<meta>` tags — all literal text within the top-level HTML document
+- Detection method: Already covered by §3.2's raw-body regex scan (comments/attributes/hidden elements are just more text in that same response). This row exists to label *where* in the document a hit came from for the §4 audit log, not as an independent scanning pass
 
 **3.4 — CSS**
 - Where: Inline `<style>`, linked `.css` files, `content:` properties, custom properties, comments
@@ -169,8 +169,8 @@ Where in the server's response a `VISUALPING{...}` token might live.
 - Detection method: `page.evaluate(() => document.cookie)` after load, in addition to header inspection in 3.1
 
 **3.9 — Structured data**
-- Where: `<script type="application/ld+json">` (schema.org markup)
-- Detection method: Parse and regex scan JSON-LD blocks
+- Where: `<script type="application/ld+json">` (schema.org markup) — inert data, not executed as JS, but still literal text within the top-level HTML document
+- Detection method: Already covered by §3.2's raw-body regex scan (the JSON-LD text sits in that same response, whether or not it's parsed as JSON first). This row exists to label the hit as "found in structured data" for the §4 audit log, not as an independent scanning pass
 
 **3.10 — Non-rendered text attributes**
 - Where: `alt`, `title`, `aria-*`, `placeholder` — present in DOM/accessibility tree but not visible rendered text
@@ -264,7 +264,7 @@ implementation pass. Revisit once the vectors above are working.
 
 **3.8 — Embedded JSON state blobs**
 - Where: Framework hydration data — `window.__INITIAL_STATE__`, `<script type="application/json">` (e.g. Next.js `__NEXT_DATA__`), Redux/GraphQL cache dumps
-- Detection method: Parse `<script type="application/json">` contents and known global-variable names via `page.evaluate`; regex scan the JSON text
+- Detection method: If the blob is a literal assignment/tag in the top-level HTML (the common case), it's already covered by §3.2's raw-body scan — this row just labels the hit as "found in hydration state" for the §4 audit log. It only earns an *independent* check (`page.evaluate` reading `window.__INITIAL_STATE__` etc. after load) when the state is populated by a later XHR/fetch call rather than embedded at initial load — in which case it's really §3.11's job, not a raw-body regex
 
 **3.12 — WebSocket messages**
 - Where: Frames sent/received over `ws://`/`wss://` connections
