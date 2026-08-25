@@ -139,9 +139,29 @@ Every visited resource is logged with:
 ## 5. Engineering Constraints
 
 - **Language:** Python
-- **Dependencies:**
-  - `playwright` — browser automation (real rendering, click-through nav)
+- **Dependencies (active — needed for the current §3 vectors):**
+  - `playwright` — browser automation: rendering, click-through nav, network
+    interception (3.1–3.3, 3.6–3.11, 3.17, 3.18), screenshots (3.19)
   - `python-dotenv` — loads credentials from `.env`, keeps them out of git
+  - `Pillow` — image decoding, EXIF metadata (3.14), preprocessing
+    (upscale/threshold) before OCR (3.19)
+  - `pytesseract` — OCR for rendered text in images (3.19); requires the
+    Tesseract OCR binary installed on the host (not a pip package)
+  - stdlib `re`/`json` cover regex scanning and JSON parsing (3.2–3.11,
+    3.17) — no extra dependency needed
+
+- **Dependencies (postponed — only needed if/when the corresponding §3
+  postponed vector is activated):**
+  - `pyzbar` — QR/barcode decoding (3.15); requires the system `zbar`
+    library (not a pip package)
+  - `pypdf` or `pdfplumber` — text/metadata extraction from PDFs (3.13)
+  - `python-docx` — text extraction from DOCX (3.13); stdlib `csv`/`zipfile`
+    already cover CSV/ZIP, no new dependency
+  - `SpeechRecognition` (+ a speech-to-text backend) — audio transcription
+    (3.23)
+  - `stegano` — LSB steganography extraction (3.24)
+  - `iptcinfo3` or `pyexiv2` — IPTC/XMP metadata, only if full coverage on
+    3.14 is needed beyond the EXIF that `Pillow`/`exifread` already give us
 
 ## 6. Open Items (JOBS)
 
