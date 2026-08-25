@@ -10,6 +10,10 @@ password on the site matching the format:
 VISUALPING{<16 hex chars>}
 ```
 
+Canonical match pattern: `VISUALPING\{[0-9a-fA-F]{16}\}` — **case-insensitive**
+until we've confirmed from real captured samples that the target only ever
+emits lowercase hex. Every vector in §3 should use this same pattern.
+
 **Ground truth constraints:**
 
 - Every password is reachable from the homepage by a real browser clicking
@@ -77,19 +81,46 @@ Where in the server's response a `VISUALPING{...}` token might live.
 `2.1`–`2.4` are the known baseline categories; specifics need confirmation.
 
 
-| #   | Vector                   | Where                                                                                              | Detection method |
-| --- | ------------------------ | -------------------------------------------------------------------------------------------------- | ---------------- |
-| 3.1 | HTTP response — headers | Response headers (incl. non-standard/custom ones,`Set-Cookie`)                                     | ⚠️ TODO        |
-| 3.2 | HTTP response — body    | Raw response body (pre-render, not just DOM)                                                       | ⚠️ TODO        |
-| 3.3 | HTML                     | Comments,`data-*` attributes, hidden inputs/elements, `<meta>` tags                                | ⚠️ TODO        |
-| 3.4 | CSS                      | Inline`<style>`, linked `.css` files, `content:` properties, custom properties, comments           | ⚠️ TODO        |
-| 3.5 | JS                       | Inline`<script>`, linked `.js` files, string literals, comments, `console.log` output, source maps | ⚠️ TODO        |
+| # | Vector | Where | Detection method |
+|---|---|---|---|
+| 3.1 | HTTP response — headers | Response headers (incl. non-standard/custom ones, `Set-Cookie`) | Case-insensitive regex scan of every header name+value, on **every** response (not just page navigations) |
+| 3.2 | HTTP response — body (page navigation) | Raw body of the top-level document response only, per URL visited (pre-render, not just DOM) | Regex scan the raw bytes/text of the main navigation response before the browser parses/renders it — catches tokens that never make it into the DOM |
+| 3.3 | HTML | Comments, `data-*` attributes, hidden inputs/elements, `<meta>` tags | Parse the full HTML document (not `innerText`); regex scan comments, all attribute values, and hidden (`display:none`/`type=hidden`) elements |
+| 3.4 | CSS | Inline `<style>`, linked `.css` files, `content:` properties, custom properties, comments | Fetch and regex scan every stylesheet's raw text. **Caveat:** a password can be assembled from several `::before`/`::after` rules (one char per selector) or hex-escaped (`content: "\0041"`), so it may render as one string without ever appearing contiguous in the raw CSS — raw-text regex alone can miss it; this case depends on the render+OCR fallback (3.26) |
+| 3.5 | JS | Inline `<script>`, linked `.js` files, string literals, comments, `console.log` output | Fetch and regex scan raw JS source; capture console messages via Playwright's `page.on('console')`. **Caveat:** this only catches literal source tokens — a password built at runtime (`String.fromCharCode(...)`, `atob(...)`, concatenation/XOR) won't match; fall back to diffing `window`'s own keys before/after load, or rely on 3.6/3.8 catching the constructed value once it lands in storage/state |
+| 3.6 | Client-side storage | `localStorage`, `sessionStorage`, `IndexedDB` — set by JS after load, invisible to any HTTP-level capture | `page.evaluate()` to dump `localStorage`/`sessionStorage` (trivial, synchronous); regex scan the dump. **`IndexedDB` is meaningfully more work** — async: enumerate `indexedDB.databases()`, open each, walk every object store via a cursor |
+| 3.7 | Cookies (JS-visible) | `document.cookie` — can differ from the `Set-Cookie` header if JS sets/rotates cookies client-side | `page.evaluate(() => document.cookie)` after load, in addition to header inspection in 3.1 |
+| 3.8 | Embedded JSON state blobs | Framework hydration data — `window.__INITIAL_STATE__`, `<script type="application/json">` (e.g. Next.js `__NEXT_DATA__`), Redux/GraphQL cache dumps | Parse `<script type="application/json">` contents and known global-variable names via `page.evaluate`; regex scan the JSON text |
+| 3.9 | Structured data | `<script type="application/ld+json">` (schema.org markup) | Parse and regex scan JSON-LD blocks |
+| 3.10 | Non-rendered text attributes | `alt`, `title`, `aria-*`, `placeholder` — present in DOM/accessibility tree but not visible rendered text | Regex scan these specific attributes across all elements, not just `innerText` |
+| 3.11 | Background XHR/fetch responses | JSON/text bodies of API calls fired during page load or interaction, **excluding** asset types already claimed by their own vector (JS 3.5, CSS 3.4, images 3.14, source maps 3.16, manifest 3.17) | Playwright `page.on('response')`; regex scan any response body not already covered by a dedicated vector row, keyed by originating request |
+| 3.14 | Image metadata | EXIF fields in `<img>`/downloaded image files | Fetch images, parse EXIF via `Pillow`/`exifread`, regex scan text fields. **IPTC/XMP fields need a different library** (e.g. `iptcinfo3`, `pyexiv2`) — `Pillow`/`exifread` don't read them; add that dependency if we want full coverage, otherwise scope this row to EXIF only |
+| 3.16 | Source map files | `//# sourceMappingURL=` comment at the end of a `.js`/`.css` file **or** the `SourceMap`/`X-SourceMap` HTTP response header, either of which can point to a `.map` file that embeds original unminified source | Check both the trailing comment and the response headers for the map URL; fetch the `.map` file and regex scan its `sourcesContent` |
+| 3.17 | Web app manifest | `manifest.json` linked via `<link rel="manifest">` (see §2.6) | Fetch and regex scan the manifest JSON body itself, not just the URLs it lists |
+| 3.18 | Non-200 / error pages | Custom 4xx/5xx error page bodies — easy to skip if the crawler treats non-2xx as "nothing here" | Scan error response bodies the same as 3.2 instead of discarding on non-2xx status |
+| 3.19 | Rendered text in an image | Banner/badge PNG/JPG (`<img>` or background-image assets) — password drawn as pixels, not characters | Fetch image, run OCR (`pytesseract`) with a character whitelist (`VISUALPING{}0-9a-fA-F`) and image preprocessing (upscale/threshold) to reduce `0`/`O`/`1`/`l`/`I` misreads, regex scan the extracted text |
 
-> **#JOBS** — for every vector, define: **title**, **where** it's located,
-> the expected **format**, and **how** to scan for the
-> `VISUALPING{[0-9a-f]{16}}` pattern in it. Consider whether the regex
-> needs to run against raw bytes vs. rendered DOM vs. decoded content
-> (e.g. base64, JSON-escaped strings).
+> **#JOBS** — triage the remaining untriaged vectors above: confirm the
+> expected **format** and whether the regex needs to run against raw bytes
+> vs. rendered DOM vs. decoded content (e.g. base64, JSON-escaped strings).
+
+#### Postponed — future development
+
+Recognized as valid extraction vectors but deprioritized for the first
+implementation pass. Revisit once the vectors above are working.
+
+| # | Vector | Where | Detection method |
+|---|---|---|---|
+| 3.12 | WebSocket messages | Frames sent/received over `ws://`/`wss://` connections | Playwright `page.on('websocket')` + frame-received/sent listeners; regex scan payload text |
+| 3.13 | Downloadable files | Linked non-HTML documents (PDF, TXT, CSV, DOCX, ZIP) | Fetch and extract text and metadata (e.g. PDF `Author`/`Producer` fields); regex scan extracted content |
+| 3.15 | QR codes / encoded images | Data visually encoded in an image rather than stored as text | Decode QR/barcodes (e.g. `pyzbar`) from fetched images; regex scan decoded text |
+| 3.20 | Canvas-drawn text | `<canvas>` elements (`fillText`/`strokeText`, no DOM text node) | Screenshot the canvas region and OCR it, or instrument/intercept `fillText` calls via `page.evaluate` |
+| 3.21 | Custom web-font glyph substitution | `@font-face` with remapped `unicode-range` — copied/parsed DOM text ≠ what's visually rendered | Screenshot + OCR the element and compare against its raw `textContent`; trust OCR when they diverge |
+| 3.22 | SVG text-as-paths | `<path>` shapes forming letters, no real `<text>` node | Screenshot + OCR, since there's no text node to parse |
+| 3.23 | Audio-encoded password | `<audio src>` or linked audio files (spoken TTS, Morse/DTMF tones) | Speech-to-text (e.g. `speech_recognition`) or tone/Morse decode; regex scan the transcript |
+| 3.24 | Steganography in image pixel data | Any fetched image (LSB-style hidden payload) | Run steg-extraction (e.g. `stegano`, `zsteg`) as a fallback on images that don't otherwise yield a hit |
+| 3.25 | Strings inside binary files | favicon.ico, font files, `.wasm` modules — anything fetched regardless of declared Content-Type | `strings`-style printable-ASCII scan over the raw bytes of every fetched resource, not filtered by content-type |
+| 3.26 | Full-page screenshot + OCR | Rendered page, after each page settles | Catch-all fallback pass — screenshot the viewport and OCR it, to catch visual-only text not covered by other vectors |
 
 ## 4. Audit Log
 
