@@ -158,7 +158,7 @@ Where in the server's response a `VISUALPING{...}` token might live.
 
 **3.5 — JS**
 - Where: Inline `<script>`, linked `.js` files, string literals, comments, `console.log` output
-- Detection method: Fetch and regex scan raw JS source; capture console messages via Playwright's `page.on('console')`. **Caveat:** this only catches literal source tokens — a password built at runtime (`String.fromCharCode(...)`, `atob(...)`, concatenation/XOR) won't match; fall back to diffing `window`'s own keys before/after load, or rely on 3.6/3.8 catching the constructed value once it lands in storage/state
+- Detection method: Fetch and regex scan raw JS source; capture console messages via Playwright's `page.on('console')`. **Caveat:** this only catches literal source tokens — a password built at runtime (`String.fromCharCode(...)`, `atob(...)`, concatenation/XOR) won't match; fall back to diffing `window`'s own keys before/after load, or rely on 3.6 (active) / 3.8 (postponed) catching the constructed value once it lands in storage/state
 
 **3.6 — Client-side storage**
 - Where: `localStorage`, `sessionStorage`, `IndexedDB` — set by JS after load, invisible to any HTTP-level capture
@@ -167,10 +167,6 @@ Where in the server's response a `VISUALPING{...}` token might live.
 **3.7 — Cookies (JS-visible)**
 - Where: `document.cookie` — can differ from the `Set-Cookie` header if JS sets/rotates cookies client-side
 - Detection method: `page.evaluate(() => document.cookie)` after load, in addition to header inspection in 3.1
-
-**3.8 — Embedded JSON state blobs**
-- Where: Framework hydration data — `window.__INITIAL_STATE__`, `<script type="application/json">` (e.g. Next.js `__NEXT_DATA__`), Redux/GraphQL cache dumps
-- Detection method: Parse `<script type="application/json">` contents and known global-variable names via `page.evaluate`; regex scan the JSON text
 
 **3.9 — Structured data**
 - Where: `<script type="application/ld+json">` (schema.org markup)
@@ -266,6 +262,10 @@ its own field(s) and, sometimes, its own accessor even within one library.
 Recognized as valid extraction vectors but deprioritized for the first
 implementation pass. Revisit once the vectors above are working.
 
+**3.8 — Embedded JSON state blobs**
+- Where: Framework hydration data — `window.__INITIAL_STATE__`, `<script type="application/json">` (e.g. Next.js `__NEXT_DATA__`), Redux/GraphQL cache dumps
+- Detection method: Parse `<script type="application/json">` contents and known global-variable names via `page.evaluate`; regex scan the JSON text
+
 **3.12 — WebSocket messages**
 - Where: Frames sent/received over `ws://`/`wss://` connections
 - Detection method: Playwright `page.on('websocket')` + frame-received/sent listeners; regex scan payload text
@@ -329,14 +329,14 @@ Every visited resource is logged with:
 - **Language:** Python
 - **Dependencies (active — needed for the current §3 vectors):**
   - `playwright` — browser automation: rendering, click-through nav, network
-    interception (3.1–3.3, 3.6–3.11, 3.18), screenshots (3.19)
+    interception (3.1–3.3, 3.6, 3.7, 3.9–3.11, 3.18), screenshots (3.19)
   - `python-dotenv` — loads credentials from `.env`, keeps them out of git
   - `Pillow` — image decoding, EXIF metadata (3.14), preprocessing
     (upscale/threshold) before OCR (3.19)
   - `pytesseract` — OCR for rendered text in images (3.19); requires the
     Tesseract OCR binary installed on the host (not a pip package)
-  - stdlib `re`/`json` cover regex scanning and JSON parsing (3.2–3.11)
-    — no extra dependency needed
+  - stdlib `re`/`json` cover regex scanning and JSON parsing (3.2–3.7,
+    3.9–3.11) — no extra dependency needed
 
 - **Dependencies (postponed — only needed if/when the corresponding §3
   postponed vector is activated):**
