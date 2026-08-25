@@ -12,3 +12,4 @@ venv/
 # Logs / output
 *.log
 audit_log*
+output/
