@@ -12,6 +12,7 @@ import asyncio
 import json
 import logging
 import sys
+from datetime import datetime
 from pathlib import Path
 
 from urllib.parse import urlsplit
@@ -32,8 +33,10 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-dir", type=Path, default=None,
-        help="Write audit_log.jsonl / crawl.log / found_passwords.json here "
-             "instead of ./output (useful to keep a smoke test separate).",
+        help="Write audit_log.jsonl / crawl.log / found_passwords.json here. "
+             "Default: a fresh timestamped folder under ./output/runs/ every "
+             "time, so past runs are never overwritten and stay around for "
+             "debugging/review.",
     )
     return parser.parse_args()
 
@@ -59,9 +62,23 @@ def setup_logging(output_dir: Path) -> None:
     )
 
 
+def _fresh_run_dir() -> Path:
+    """A new, never-before-used folder per run — so rerunning the crawl
+    never clobbers a previous run's audit_log.jsonl/crawl.log, which are
+    needed intact for debugging and reviewing past results."""
+    base = OUTPUT_DIR / "runs"
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    candidate = base / stamp
+    suffix = 2
+    while candidate.exists():  # same-second reruns get -2, -3, ...
+        candidate = base / f"{stamp}-{suffix}"
+        suffix += 1
+    return candidate
+
+
 async def main() -> None:
     args = parse_args()
-    output_dir = args.output_dir or OUTPUT_DIR
+    output_dir = args.output_dir or _fresh_run_dir()
     setup_logging(output_dir)
     logger = logging.getLogger("main")
     effective_max_visits = args.max_visits if args.max_visits is not None else MAX_VISITS
@@ -96,6 +113,13 @@ async def main() -> None:
     )
     logger.info("Audit log: %s", output_dir / "audit_log.jsonl")
     logger.info("Found-passwords summary: %s", found_passwords_path)
+
+    # Convenience pointer to the most recent run — doesn't replace any run's
+    # own files, just makes "where did that last run go" a one-line lookup.
+    try:
+        (OUTPUT_DIR / "latest.txt").write_text(str(output_dir.resolve()), encoding="utf-8")
+    except OSError:
+        pass
 
 
 if __name__ == "__main__":

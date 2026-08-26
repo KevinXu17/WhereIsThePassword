@@ -9,7 +9,7 @@ import shutil
 
 from PIL import Image, ImageOps
 
-from .patterns import find_passwords
+from .patterns import find_passwords, find_passwords_deep
 
 logger = logging.getLogger("crawler.media")
 
@@ -52,6 +52,26 @@ def _tesseract_ok() -> bool:
     return _tesseract_available
 
 
+def _add_text(texts: list[str], value: str) -> None:
+    """Append a decoded metadata value, plus a null-stripped variant.
+
+    EXIF UserComment (tag 0x9286) is stored per-spec as an 8-byte charset
+    prefix (`UNICODE\\x00`, `ASCII\\x00\\x00\\x00`, ...) followed by the
+    comment in *that* charset — Pillow hands it back as raw bytes and
+    doesn't decode per that convention. Blindly decoding UTF-16 bytes as
+    UTF-8 doesn't raise (every byte, including the interleaved 0x00s, is a
+    valid single-byte UTF-8 codepoint), so `errors="ignore"` doesn't drop
+    anything — it comes back as e.g. `V\\x00I\\x00S\\x00U\\x00A\\x00L...`,
+    a real password sliced apart by literal NUL characters, which
+    PASSWORD_RE (contiguous match) can never match. Stripping NULs
+    reconstructs it as a plain substring (`UNICODEVISUALPING{...}` — the
+    regex finds it fine as a substring of that). No-op on fields that
+    never had embedded NULs, so this is safe to do unconditionally."""
+    texts.append(value)
+    if "\x00" in value:
+        texts.append(value.replace("\x00", ""))
+
+
 def extract_image_text_fields(raw: bytes) -> list[str]:
     """§3.14 — pull every string-valued metadata field out of an image, per format."""
     texts: list[str] = []
@@ -72,7 +92,7 @@ def extract_image_text_fields(raw: bytes) -> list[str]:
                 except Exception:
                     continue
             if isinstance(value, str):
-                texts.append(value)
+                _add_text(texts, value)
     except Exception:
         pass
 
@@ -81,16 +101,16 @@ def extract_image_text_fields(raw: bytes) -> list[str]:
     try:
         for key, value in (img.text.items() if hasattr(img, "text") else []):
             if isinstance(value, str):
-                texts.append(value)
+                _add_text(texts, value)
     except Exception:
         pass
     try:
         for key, value in img.info.items():
             if isinstance(value, str):
-                texts.append(value)
+                _add_text(texts, value)
             elif isinstance(value, (bytes, bytearray)):
                 try:
-                    texts.append(value.decode("utf-8", "ignore"))
+                    _add_text(texts, value.decode("utf-8", "ignore"))
                 except Exception:
                     pass
     except Exception:
@@ -110,9 +130,19 @@ def extract_image_text_fields(raw: bytes) -> list[str]:
 
 
 def scan_image_metadata(raw: bytes) -> list[str]:
+    """§3.14. Only matches the wrapped VISUALPING{...} form — see
+    find_passwords()/PASSWORD_RE. A bare 16-hex-char string turns up
+    reliably in a JPEG COM marker (0xFFFE) right after EXIF UserComment on
+    *every* sampled image, real password present or not (confirmed via a
+    live byte-level dump of field-visit.jpg, which has a genuine wrapped
+    password in UserComment *and* a decoy bare-hex COM marker, vs.
+    office-plants.jpg, which has no wrapped string anywhere in the file at
+    all, only that same decoy-shaped COM marker) — it's a deliberate trap
+    for a scanner that treats any 16-hex string as a hit, not a second
+    storage convention. Do not add a bare-hex fallback here."""
     hits: list[str] = []
     for text in extract_image_text_fields(raw):
-        hits.extend(find_passwords(text))
+        hits.extend(find_passwords_deep(text))
     return list(dict.fromkeys(hits))
 
 
@@ -169,10 +199,10 @@ def scan_sourcemap(sourcemap_json: dict) -> list[str]:
     hits: list[str] = []
     for content in sourcemap_json.get("sourcesContent") or []:
         if isinstance(content, str):
-            hits.extend(find_passwords(content))
+            hits.extend(find_passwords_deep(content))
     # Some maps only ship `sources` (paths) without sourcesContent, or embed
     # the password in a source *path* itself — cheap to also check.
     for src in sourcemap_json.get("sources") or []:
         if isinstance(src, str):
-            hits.extend(find_passwords(src))
+            hits.extend(find_passwords_deep(src))
     return list(dict.fromkeys(hits))

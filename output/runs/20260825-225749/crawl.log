@@ -1,0 +1,536 @@
+2026-08-25 22:57:49,232 INFO    main: Starting crawl of http://54.214.7.161  (scope: 54.214.7.161)
+2026-08-25 22:57:49,232 INFO    main: Auth: qiwen.xu / (basic auth configured on browser context)
+2026-08-25 22:57:49,232 INFO    main: Target pattern: VISUALPING\{[0-9a-fA-F]{16}\}
+2026-08-25 22:57:49,232 INFO    main: Visit cap: 500  |  query-string trial cap: 2 distinct variant(s) per path, shared across all params (page/list/p/v/ref/... alike)
+2026-08-25 22:57:50,198 INFO    crawler: [1/500] [_root:1] visiting http://54.214.7.161
+2026-08-25 22:57:54,368 INFO    crawler: [2/500] [docs:1] visiting http://54.214.7.161/docs/upstream-sample-channel/
+2026-08-25 22:57:55,817 INFO    crawler: [3/500] [wiki:1] visiting http://54.214.7.161/wiki/
+2026-08-25 22:57:57,152 INFO    crawler: [4/500] [notes:1] visiting http://54.214.7.161/notes/
+2026-08-25 22:58:01,841 INFO    crawler: [5/500] [docs:2] visiting http://54.214.7.161/docs/?ref=related
+2026-08-25 22:58:04,861 INFO    crawler.audit: FOUND VISUALPING{db7e533a9cef7f72}  (vector 3.14 — Image metadata (EXIF/tEXt/IPTC/XMP/...) @ http://54.214.7.161/static/img/field-visit.jpg)
+2026-08-25 22:58:04,867 INFO    crawler: [6/500] [help:1] visiting http://54.214.7.161/help/?utm_source=internal
+2026-08-25 22:58:07,377 INFO    crawler: [7/500] [wiki:2] visiting http://54.214.7.161/wiki/shard-schedule/
+2026-08-25 22:58:08,743 INFO    crawler: [8/500] [blog:1] visiting http://54.214.7.161/blog/index.html
+2026-08-25 22:58:10,064 INFO    crawler: [9/500] [report:1] visiting http://54.214.7.161/report/?page=1
+2026-08-25 22:58:11,357 INFO    crawler: [10/500] [notes:2] visiting http://54.214.7.161/notes/archive-region/
+2026-08-25 22:58:12,652 INFO    crawler: [11/500] [docs:3] visiting http://54.214.7.161/docs/change-signal-anchor/
+2026-08-25 22:58:13,962 INFO    crawler: [12/500] [products:1] visiting http://54.214.7.161/products/?hl=en
+2026-08-25 22:58:15,267 INFO    crawler: [13/500] [wiki:3] visiting http://54.214.7.161/wiki/rule-change/
+2026-08-25 22:58:16,552 INFO    crawler: [14/500] [wiki:4] visiting http://54.214.7.161/wiki/digest-session-ledger/
+2026-08-25 22:58:18,287 INFO    crawler: [15/500] [status:1] visiting http://54.214.7.161/status/eu-region/
+2026-08-25 22:58:19,576 INFO    crawler: [16/500] [wiki:5] visiting http://54.214.7.161/wiki/domain-queue-backoff/
+2026-08-25 22:58:20,853 INFO    crawler: [17/500] [products:2] visiting http://54.214.7.161/products
+2026-08-25 22:58:22,145 INFO    crawler: [18/500] [blog:2] visiting http://54.214.7.161/blog/threshold-detect-mirror
+2026-08-25 22:58:23,452 INFO    crawler: [19/500] [products:3] visiting http://54.214.7.161/products/retry-compare/?utm_source=internal
+2026-08-25 22:58:24,731 INFO    crawler.audit: FOUND VISUALPING{fb725e1f3d6728b1}  (vector 3.5 — JS (inline/external source, console output) @ http://54.214.7.161/static/js/theme-switcher.js)
+2026-08-25 22:58:24,733 INFO    crawler: [20/500] [docs:4] visiting http://54.214.7.161/docs/object-header-interval/?utm_source=internal
+2026-08-25 22:58:26,011 INFO    crawler: [21/500] [blog:3] visiting http://54.214.7.161/blog/origin-element-sync/
+2026-08-25 22:58:27,286 INFO    crawler: [22/500] [notes:3] visiting http://54.214.7.161/notes/embed-packet/index.html
+2026-08-25 22:58:28,550 INFO    crawler: [23/500] [products:4] visiting http://54.214.7.161/products/handshake-backoff-fragment/?v=9
+2026-08-25 22:58:29,830 INFO    crawler: [24/500] [products:5] visiting http://54.214.7.161/products/gateway-visual
+2026-08-25 22:58:31,138 INFO    crawler: [25/500] [docs:5] visiting http://54.214.7.161/docs
+2026-08-25 22:58:32,427 INFO    crawler: [26/500] [wiki:6] visiting http://54.214.7.161/wiki/ledger-header-object/?utm_source=internal
+2026-08-25 22:58:33,709 INFO    crawler: [27/500] [wiki:7] visiting http://54.214.7.161/wiki/filter-upstream/index.html
+2026-08-25 22:58:34,974 INFO    crawler: [28/500] [help:2] visiting http://54.214.7.161/help
+2026-08-25 22:58:36,280 INFO    crawler: [29/500] [wiki:8] visiting http://54.214.7.161/wiki/cookie-vector/
+2026-08-25 22:58:37,568 INFO    crawler: [30/500] [blog:4] visiting http://54.214.7.161/blog
+2026-08-25 22:58:38,858 INFO    crawler: [31/500] [products:6] visiting http://54.214.7.161/products/backoff-queue-region/
+2026-08-25 22:58:40,591 INFO    crawler: [32/500] [notes:4] visiting http://54.214.7.161/notes/channel-stream/
+2026-08-25 22:58:41,863 INFO    crawler: [33/500] [notes:5] visiting http://54.214.7.161/notes
+2026-08-25 22:58:43,163 INFO    crawler: [34/500] [docs:6] visiting http://54.214.7.161/docs/sync-resolver-ticket/
+2026-08-25 22:58:44,451 INFO    crawler: [35/500] [wiki:9] visiting http://54.214.7.161/wiki/selector-socket-digest/
+2026-08-25 22:58:45,763 INFO    crawler: [36/500] [docs:7] visiting http://54.214.7.161/docs/worker-signal/
+2026-08-25 22:58:47,046 INFO    crawler.audit: FOUND VISUALPING{349a583fba34c301}  (vector 3.5 — JS (inline/external source, console output) @ http://54.214.7.161/static/js/analytics.js)
+2026-08-25 22:58:47,049 INFO    crawler: [37/500] [report:2] visiting http://54.214.7.161/report/?page=2
+2026-08-25 22:58:48,333 INFO    crawler: [38/500] [blog:5] visiting http://54.214.7.161/blog/latency-pipeline-digest/?utm_source=internal
+2026-08-25 22:58:49,612 INFO    crawler: [39/500] [docs:8] visiting http://54.214.7.161/docs/visual-shard-visual/
+2026-08-25 22:58:50,907 INFO    crawler: [40/500] [products:7] visiting http://54.214.7.161/products/anchor-trend/?utm_source=sidebar
+2026-08-25 22:58:52,200 INFO    crawler: [41/500] [docs:9] visiting http://54.214.7.161/docs/packet-replica-packet/
+2026-08-25 22:58:53,484 INFO    crawler: [42/500] [blog:6] visiting http://54.214.7.161/blog/baseline-signal-diff
+2026-08-25 22:58:54,800 INFO    crawler: [43/500] [docs:10] visiting http://54.214.7.161/docs/digest-packet/
+2026-08-25 22:58:56,081 INFO    crawler: [44/500] [docs:11] visiting http://54.214.7.161/docs/stream-channel/index.html
+2026-08-25 22:58:57,383 INFO    crawler: [45/500] [wiki:10] visiting http://54.214.7.161/wiki
+2026-08-25 22:58:58,704 INFO    crawler: [46/500] [docs:12] visiting http://54.214.7.161/docs/threshold-search/?utm_source=sidebar
+2026-08-25 22:59:00,016 INFO    crawler: [47/500] [products:8] visiting http://54.214.7.161/products/replica-proxy
+2026-08-25 22:59:01,364 INFO    crawler: [48/500] [blog:7] visiting http://54.214.7.161/blog/batch-alert-metric/
+2026-08-25 22:59:02,789 INFO    crawler: [49/500] [blog:8] visiting http://54.214.7.161/blog/threshold-detect-mirror/
+2026-08-25 22:59:04,115 INFO    crawler: [50/500] [wiki:11] visiting http://54.214.7.161/wiki/buffer-storage-bucket/
+2026-08-25 22:59:05,834 INFO    crawler: [51/500] [wiki:12] visiting http://54.214.7.161/wiki/trend-detect
+2026-08-25 22:59:07,133 INFO    crawler: [52/500] [notes:6] visiting http://54.214.7.161/notes/zone-trend/
+2026-08-25 22:59:08,576 INFO    crawler.audit: FOUND VISUALPING{e1c2e40cf01c17cc}  (vector 3.19 — Rendered text in an image (OCR) @ http://54.214.7.161/static/img/whiteboard-scan.png)
+2026-08-25 22:59:08,578 INFO    crawler: [53/500] [products:9] visiting http://54.214.7.161/products/threshold-handshake
+2026-08-25 22:59:09,884 INFO    crawler: [54/500] [help:3] visiting http://54.214.7.161/help/ticket-gateway/
+2026-08-25 22:59:11,160 INFO    crawler: [55/500] [blog:9] visiting http://54.214.7.161/blog/report-buffer/
+2026-08-25 22:59:12,444 INFO    crawler: [56/500] [docs:13] visiting http://54.214.7.161/docs/field-embed/
+2026-08-25 22:59:13,717 INFO    crawler: [57/500] [products:10] visiting http://54.214.7.161/products/filter-gateway
+2026-08-25 22:59:15,017 INFO    crawler.audit: FOUND VISUALPING{64d26185a2f94e34}  (vector 3.1 — HTTP response headers @ http://54.214.7.161/products/filter-gateway/)
+2026-08-25 22:59:15,019 INFO    crawler: [58/500] [notes:7] visiting http://54.214.7.161/notes/replica-rule/
+2026-08-25 22:59:16,303 INFO    crawler: [59/500] [wiki:13] visiting http://54.214.7.161/wiki/compare-batch-rule/
+2026-08-25 22:59:17,585 INFO    crawler: [60/500] [docs:14] visiting http://54.214.7.161/docs/gateway-upstream-extract/?ref=related
+2026-08-25 22:59:18,865 INFO    crawler: [61/500] [blog:10] visiting http://54.214.7.161/blog/fragment-session/?hl=en
+2026-08-25 22:59:20,152 INFO    crawler: [62/500] [help:4] visiting http://54.214.7.161/help/visual-label-compare/
+2026-08-25 22:59:21,441 INFO    crawler: [63/500] [wiki:14] visiting http://54.214.7.161/wiki/classify-search/
+2026-08-25 22:59:22,714 INFO    crawler: [64/500] [notes:8] visiting http://54.214.7.161/notes/sample-worker-record
+2026-08-25 22:59:24,018 INFO    crawler: [65/500] [wiki:15] visiting http://54.214.7.161/wiki/cookie-replica/?utm_source=sidebar
+2026-08-25 22:59:25,303 INFO    crawler: [66/500] [notes:9] visiting http://54.214.7.161/notes/ticket-field
+2026-08-25 22:59:26,614 INFO    crawler: [67/500] [products:11] visiting http://54.214.7.161/products/schedule-report
+2026-08-25 22:59:27,908 INFO    crawler: [68/500] [products:12] visiting http://54.214.7.161/products/gateway-visual/
+2026-08-25 22:59:29,191 INFO    crawler: [69/500] [help:5] visiting http://54.214.7.161/help/ledger-snapshot-compare/index.html
+2026-08-25 22:59:30,473 INFO    crawler: [70/500] [help:6] visiting http://54.214.7.161/help/signal-capture-interval/
+2026-08-25 22:59:31,753 INFO    crawler: [71/500] [docs:15] visiting http://54.214.7.161/docs/shard-viewport/index.html
+2026-08-25 22:59:33,042 INFO    crawler: [72/500] [products:13] visiting http://54.214.7.161/products/column-anomaly-archive/index.html
+2026-08-25 22:59:34,312 INFO    crawler: [73/500] [docs:16] visiting http://54.214.7.161/docs/interval-cluster/?hl=en
+2026-08-25 22:59:35,599 INFO    crawler: [74/500] [notes:10] visiting http://54.214.7.161/notes/handshake-trend/
+2026-08-25 22:59:36,876 INFO    crawler: [75/500] [wiki:16] visiting http://54.214.7.161/wiki/latency-schema/?utm_source=sidebar
+2026-08-25 22:59:38,159 INFO    crawler: [76/500] [wiki:17] visiting http://54.214.7.161/wiki/object-ticket/?ref=nav
+2026-08-25 22:59:39,453 INFO    crawler: [77/500] [blog:11] visiting http://54.214.7.161/blog/object-embed/
+2026-08-25 22:59:40,752 INFO    crawler: [78/500] [blog:12] visiting http://54.214.7.161/blog/webhook-crawler/
+2026-08-25 22:59:42,049 INFO    crawler: [79/500] [wiki:18] visiting http://54.214.7.161/wiki/worker-extract-proxy/?ref=related
+2026-08-25 22:59:43,327 INFO    crawler: [80/500] [notes:11] visiting http://54.214.7.161/notes/bucket-upstream/index.html
+2026-08-25 22:59:44,613 INFO    crawler: [81/500] [notes:12] visiting http://54.214.7.161/notes/sync-trend-latency/
+2026-08-25 22:59:45,927 INFO    crawler: [82/500] [notes:13] visiting http://54.214.7.161/notes/header-rule/
+2026-08-25 22:59:47,210 INFO    crawler: [83/500] [docs:17] visiting http://54.214.7.161/docs/metric-interval-latency/?utm_source=internal
+2026-08-25 22:59:48,503 INFO    crawler: [84/500] [notes:14] visiting http://54.214.7.161/notes/snapshot-history-history
+2026-08-25 22:59:49,803 INFO    crawler: [85/500] [notes:15] visiting http://54.214.7.161/notes/history-backoff/
+2026-08-25 22:59:51,113 INFO    crawler: [86/500] [notes:16] visiting http://54.214.7.161/notes/crawler-origin/?utm_source=sidebar
+2026-08-25 22:59:52,382 INFO    crawler: [87/500] [docs:18] visiting http://54.214.7.161/docs/bucket-object-storage/
+2026-08-25 22:59:53,670 INFO    crawler: [88/500] [blog:13] visiting http://54.214.7.161/blog/baseline-signal-diff/
+2026-08-25 22:59:54,954 INFO    crawler: [89/500] [blog:14] visiting http://54.214.7.161/blog/compare-metric/index.html
+2026-08-25 22:59:56,233 INFO    crawler: [90/500] [help:7] visiting http://54.214.7.161/help/embed-column-render/?ref=nav
+2026-08-25 22:59:57,983 INFO    crawler: [91/500] [blog:15] visiting http://54.214.7.161/blog/parse-metric/
+2026-08-25 22:59:59,258 INFO    crawler: [92/500] [wiki:19] visiting http://54.214.7.161/wiki/session-channel/
+2026-08-25 23:00:00,588 INFO    crawler: [93/500] [blog:16] visiting http://54.214.7.161/blog/monitor-socket-queue/?v=9
+2026-08-25 23:00:01,894 INFO    crawler: [94/500] [wiki:20] visiting http://54.214.7.161/wiki/webhook-change/
+2026-08-25 23:00:03,186 INFO    crawler: [95/500] [products:14] visiting http://54.214.7.161/products/batch-queue/
+2026-08-25 23:00:04,503 INFO    crawler: [96/500] [help:8] visiting http://54.214.7.161/help/pixel-worker-threshold/
+2026-08-25 23:00:05,810 INFO    crawler: [97/500] [docs:19] visiting http://54.214.7.161/docs/extract-shard-embed/?utm_source=internal
+2026-08-25 23:00:07,114 INFO    crawler: [98/500] [help:9] visiting http://54.214.7.161/help/archive-selector-backoff/?v=9
+2026-08-25 23:00:08,429 INFO    crawler: [99/500] [help:10] visiting http://54.214.7.161/help/replica-handshake-cookie/
+2026-08-25 23:00:09,714 INFO    crawler: [100/500] [blog:17] visiting http://54.214.7.161/blog/proxy-filter-filter
+2026-08-25 23:00:11,095 INFO    crawler: [101/500] [help:11] visiting http://54.214.7.161/help/stream-parse/index.html
+2026-08-25 23:00:12,367 INFO    crawler: [102/500] [products:15] visiting http://54.214.7.161/products/sample-element-index/
+2026-08-25 23:00:13,659 INFO    crawler: [103/500] [products:16] visiting http://54.214.7.161/products/replica-proxy/
+2026-08-25 23:00:14,935 INFO    crawler: [104/500] [products:17] visiting http://54.214.7.161/products/ticket-pipeline-resolver/index.html
+2026-08-25 23:00:16,211 INFO    crawler: [105/500] [wiki:21] visiting http://54.214.7.161/wiki/compare-handshake-schedule/
+2026-08-25 23:00:17,481 INFO    crawler: [106/500] [notes:17] visiting http://54.214.7.161/notes/anomaly-baseline-archive/?hl=en
+2026-08-25 23:00:18,762 INFO    crawler: [107/500] [notes:18] visiting http://54.214.7.161/notes/queue-fragment
+2026-08-25 23:00:20,066 INFO    crawler: [108/500] [docs:20] visiting http://54.214.7.161/docs/element-upstream/
+2026-08-25 23:00:21,338 INFO    crawler: [109/500] [blog:18] visiting http://54.214.7.161/blog/schedule-digest
+2026-08-25 23:00:22,634 INFO    crawler: [110/500] [docs:21] visiting http://54.214.7.161/docs/sync-schedule/
+2026-08-25 23:00:23,909 INFO    crawler: [111/500] [blog:19] visiting http://54.214.7.161/blog/replica-storage-visual/?utm_source=internal
+2026-08-25 23:00:25,191 INFO    crawler: [112/500] [help:12] visiting http://54.214.7.161/help/zone-index-cookie/
+2026-08-25 23:00:26,472 INFO    crawler: [113/500] [notes:19] visiting http://54.214.7.161/notes/proxy-extract/
+2026-08-25 23:00:27,756 INFO    crawler: [114/500] [notes:20] visiting http://54.214.7.161/notes/timeout-change-cache/
+2026-08-25 23:00:29,029 INFO    crawler: [115/500] [notes:21] visiting http://54.214.7.161/notes/cookie-pixel-classify/
+2026-08-25 23:00:30,313 INFO    crawler: [116/500] [blog:20] visiting http://54.214.7.161/blog/render-visual-anchor/
+2026-08-25 23:00:31,590 INFO    crawler: [117/500] [wiki:22] visiting http://54.214.7.161/wiki/filter-buffer/
+2026-08-25 23:00:32,885 INFO    crawler: [118/500] [blog:21] visiting http://54.214.7.161/blog/domain-monitor/
+2026-08-25 23:00:34,167 INFO    crawler: [119/500] [wiki:23] visiting http://54.214.7.161/wiki/sample-trend-metric
+2026-08-25 23:00:35,466 INFO    crawler: [120/500] [notes:22] visiting http://54.214.7.161/notes/history-header-socket/?utm_source=sidebar
+2026-08-25 23:00:36,752 INFO    crawler: [121/500] [wiki:24] visiting http://54.214.7.161/wiki/trend-detect/
+2026-08-25 23:00:38,039 INFO    crawler: [122/500] [blog:22] visiting http://54.214.7.161/blog/fragment-page/?hl=en
+2026-08-25 23:00:39,312 INFO    crawler: [123/500] [blog:23] visiting http://54.214.7.161/blog/object-timeout
+2026-08-25 23:00:40,616 INFO    crawler: [124/500] [products:18] visiting http://54.214.7.161/products/threshold-handshake/
+2026-08-25 23:00:41,892 INFO    crawler: [125/500] [notes:23] visiting http://54.214.7.161/notes/queue-fragment/
+2026-08-25 23:00:43,166 INFO    crawler: [126/500] [docs:22] visiting http://54.214.7.161/docs/mirror-origin/?utm_source=sidebar
+2026-08-25 23:00:44,448 INFO    crawler: [127/500] [products:19] visiting http://54.214.7.161/products/filter-gateway/
+2026-08-25 23:00:45,731 INFO    crawler: [128/500] [products:20] visiting http://54.214.7.161/products/digest-socket-crawler/
+2026-08-25 23:00:47,014 INFO    crawler: [129/500] [wiki:25] visiting http://54.214.7.161/wiki/filter-buffer
+2026-08-25 23:00:48,313 INFO    crawler: [130/500] [wiki:26] visiting http://54.214.7.161/wiki/render-cookie-ticket/
+2026-08-25 23:00:49,600 INFO    crawler: [131/500] [blog:24] visiting http://54.214.7.161/blog/detect-stream/
+2026-08-25 23:00:50,895 INFO    crawler: [132/500] [blog:25] visiting http://54.214.7.161/blog/origin-element-sync
+2026-08-25 23:00:52,198 INFO    crawler: [133/500] [notes:24] visiting http://54.214.7.161/notes/object-report/
+2026-08-25 23:00:53,503 INFO    crawler: [134/500] [notes:25] visiting http://54.214.7.161/notes/metric-buffer/?utm_source=sidebar
+2026-08-25 23:00:54,794 INFO    crawler: [135/500] [docs:23] visiting http://54.214.7.161/docs/upstream-visual-policy/
+2026-08-25 23:00:56,067 INFO    crawler: [136/500] [products:21] visiting http://54.214.7.161/products/sample-filter/index.html
+2026-08-25 23:00:57,344 INFO    crawler: [137/500] [wiki:27] visiting http://54.214.7.161/wiki/embed-mirror/
+2026-08-25 23:00:58,623 INFO    crawler: [138/500] [products:22] visiting http://54.214.7.161/products/rule-gateway-embed
+2026-08-25 23:00:59,911 INFO    crawler: [139/500] [products:23] visiting http://54.214.7.161/products/cache-retry-selector/
+2026-08-25 23:01:01,223 INFO    crawler: [140/500] [wiki:28] visiting http://54.214.7.161/wiki/object-stream/
+2026-08-25 23:01:02,516 INFO    crawler: [141/500] [docs:24] visiting http://54.214.7.161/docs/capture-zone/
+2026-08-25 23:01:03,819 INFO    crawler: [142/500] [wiki:29] visiting http://54.214.7.161/wiki/column-embed-element/?ref=nav
+2026-08-25 23:01:05,099 INFO    crawler: [143/500] [notes:26] visiting http://54.214.7.161/notes/sample-worker-record/
+2026-08-25 23:01:06,388 INFO    crawler: [144/500] [notes:27] visiting http://54.214.7.161/notes/parse-origin/
+2026-08-25 23:01:07,667 INFO    crawler: [145/500] [blog:26] visiting http://54.214.7.161/blog/report-viewport-object/
+2026-08-25 23:01:08,964 INFO    crawler: [146/500] [notes:28] visiting http://54.214.7.161/notes/ticket-field/
+2026-08-25 23:01:10,291 INFO    crawler: [147/500] [products:24] visiting http://54.214.7.161/products/schedule-report/
+2026-08-25 23:01:11,580 INFO    crawler: [148/500] [notes:29] visiting http://54.214.7.161/notes/column-region/
+2026-08-25 23:01:12,862 INFO    crawler: [149/500] [help:13] visiting http://54.214.7.161/help/pixel-worker-threshold
+2026-08-25 23:01:14,158 INFO    crawler: [150/500] [docs:25] visiting http://54.214.7.161/docs/metric-field/
+2026-08-25 23:01:15,439 INFO    crawler: [151/500] [docs:26] visiting http://54.214.7.161/docs/origin-interval
+2026-08-25 23:01:16,742 INFO    crawler: [152/500] [products:25] visiting http://54.214.7.161/products/timeout-object
+2026-08-25 23:01:18,051 INFO    crawler: [153/500] [blog:27] visiting http://54.214.7.161/blog/notify-storage/index.html
+2026-08-25 23:01:19,330 INFO    crawler: [154/500] [wiki:30] visiting http://54.214.7.161/wiki/cache-selector-visual/?ref=nav
+2026-08-25 23:01:20,616 INFO    crawler: [155/500] [docs:27] visiting http://54.214.7.161/docs/handshake-visual-classify/
+2026-08-25 23:01:21,894 INFO    crawler: [156/500] [blog:28] visiting http://54.214.7.161/blog/gateway-sync-threshold/
+2026-08-25 23:01:23,174 INFO    crawler: [157/500] [notes:30] visiting http://54.214.7.161/notes/gateway-anchor/
+2026-08-25 23:01:24,477 INFO    crawler: [158/500] [help:14] visiting http://54.214.7.161/help/metric-object
+2026-08-25 23:01:25,796 INFO    crawler: [159/500] [notes:31] visiting http://54.214.7.161/notes/shard-payload/
+2026-08-25 23:01:27,076 INFO    crawler: [160/500] [wiki:31] visiting http://54.214.7.161/wiki/metric-page-trend/index.html
+2026-08-25 23:01:28,367 INFO    crawler: [161/500] [products:26] visiting http://54.214.7.161/products/bucket-cluster/
+2026-08-25 23:01:29,670 INFO    crawler: [162/500] [blog:29] visiting http://54.214.7.161/blog/header-proxy-visual/?v=5
+2026-08-25 23:01:30,955 INFO    crawler: [163/500] [help:15] visiting http://54.214.7.161/help/change-index/?utm_source=sidebar
+2026-08-25 23:01:32,251 INFO    crawler: [164/500] [wiki:32] visiting http://54.214.7.161/wiki/change-monitor/
+2026-08-25 23:01:33,534 INFO    crawler: [165/500] [notes:32] visiting http://54.214.7.161/notes/upstream-policy/?v=2
+2026-08-25 23:01:34,823 INFO    crawler: [166/500] [docs:28] visiting http://54.214.7.161/docs/zone-timeout-session/?ref=related
+2026-08-25 23:01:36,113 INFO    crawler: [167/500] [products:27] visiting http://54.214.7.161/products/channel-history/
+2026-08-25 23:01:37,395 INFO    crawler: [168/500] [blog:30] visiting http://54.214.7.161/blog/metric-mirror/
+2026-08-25 23:01:38,683 INFO    crawler: [169/500] [wiki:33] visiting http://54.214.7.161/wiki/classify-report/?ref=nav
+2026-08-25 23:01:39,967 INFO    crawler: [170/500] [wiki:34] visiting http://54.214.7.161/wiki/timeout-filter
+2026-08-25 23:01:41,293 INFO    crawler: [171/500] [wiki:35] visiting http://54.214.7.161/wiki/page-cookie/
+2026-08-25 23:01:42,584 INFO    crawler: [172/500] [wiki:36] visiting http://54.214.7.161/wiki/cluster-metric-handshake/
+2026-08-25 23:01:43,889 INFO    crawler: [173/500] [docs:29] visiting http://54.214.7.161/docs/compare-threshold-field/
+2026-08-25 23:01:45,202 INFO    crawler: [174/500] [notes:33] visiting http://54.214.7.161/notes/archive-parse/
+2026-08-25 23:01:46,475 INFO    crawler: [175/500] [notes:34] visiting http://54.214.7.161/notes/snapshot-history-history/
+2026-08-25 23:01:47,756 INFO    crawler: [176/500] [notes:35] visiting http://54.214.7.161/notes/bucket-pixel-alert
+2026-08-25 23:01:49,053 INFO    crawler: [177/500] [products:28] visiting http://54.214.7.161/products/baseline-trend/
+2026-08-25 23:01:50,382 INFO    crawler: [178/500] [docs:30] visiting http://54.214.7.161/docs/origin-interval/
+2026-08-25 23:01:51,659 INFO    crawler: [179/500] [notes:36] visiting http://54.214.7.161/notes/trend-column/
+2026-08-25 23:01:52,947 INFO    crawler: [180/500] [wiki:37] visiting http://54.214.7.161/wiki/record-retry/
+2026-08-25 23:01:54,221 INFO    crawler: [181/500] [blog:31] visiting http://54.214.7.161/blog/queue-viewport-cache/
+2026-08-25 23:01:55,530 INFO    crawler: [182/500] [products:29] visiting http://54.214.7.161/products/field-origin-trend
+2026-08-25 23:01:56,830 INFO    crawler: [183/500] [docs:31] visiting http://54.214.7.161/docs/header-shard/
+2026-08-25 23:01:58,110 INFO    crawler: [184/500] [notes:37] visiting http://54.214.7.161/notes/field-ledger
+2026-08-25 23:01:59,418 INFO    crawler: [185/500] [wiki:38] visiting http://54.214.7.161/wiki/ledger-trend/
+2026-08-25 23:02:00,978 INFO    crawler: [186/500] [notes:38] visiting http://54.214.7.161/notes/visual-label/
+2026-08-25 23:02:02,401 INFO    crawler: [187/500] [docs:32] visiting http://54.214.7.161/docs/socket-signal-anomaly/?v=8
+2026-08-25 23:02:03,689 INFO    crawler: [188/500] [help:16] visiting http://54.214.7.161/help/cache-extract-anomaly/
+2026-08-25 23:02:04,986 INFO    crawler: [189/500] [wiki:39] visiting http://54.214.7.161/wiki/embed-fragment/
+2026-08-25 23:02:06,283 INFO    crawler: [190/500] [notes:39] visiting http://54.214.7.161/notes/report-bucket/
+2026-08-25 23:02:07,564 INFO    crawler: [191/500] [docs:33] visiting http://54.214.7.161/docs/visual-monitor/
+2026-08-25 23:02:08,864 INFO    crawler: [192/500] [docs:34] visiting http://54.214.7.161/docs/index-gateway/
+2026-08-25 23:02:10,170 INFO    crawler: [193/500] [notes:40] visiting http://54.214.7.161/notes/cluster-webhook/index.html
+2026-08-25 23:02:11,448 INFO    crawler: [194/500] [docs:35] visiting http://54.214.7.161/docs/storage-gateway/
+2026-08-25 23:02:12,725 INFO    crawler: [195/500] [blog:32] visiting http://54.214.7.161/blog/origin-alert/
+2026-08-25 23:02:14,014 INFO    crawler: [196/500] [wiki:40] visiting http://54.214.7.161/wiki/monitor-proxy-policy
+2026-08-25 23:02:15,363 INFO    crawler: [197/500] [products:30] visiting http://54.214.7.161/products/latency-render-render/?utm_source=sidebar
+2026-08-25 23:02:16,641 INFO    crawler: [198/500] [docs:36] visiting http://54.214.7.161/docs/packet-zone-baseline/index.html
+2026-08-25 23:02:17,922 INFO    crawler: [199/500] [blog:33] visiting http://54.214.7.161/blog/proxy-filter-filter/
+2026-08-25 23:02:19,204 INFO    crawler: [200/500] [products:31] visiting http://54.214.7.161/products/embed-render/
+2026-08-25 23:02:20,503 INFO    crawler: [201/500] [products:32] visiting http://54.214.7.161/products/pixel-change/
+2026-08-25 23:02:21,791 INFO    crawler: [202/500] [blog:34] visiting http://54.214.7.161/blog/cache-packet/?ref=nav
+2026-08-25 23:02:23,081 INFO    crawler: [203/500] [wiki:41] visiting http://54.214.7.161/wiki/header-zone/
+2026-08-25 23:02:24,363 INFO    crawler: [204/500] [blog:35] visiting http://54.214.7.161/blog/extract-visual-sync/
+2026-08-25 23:02:25,646 INFO    crawler: [205/500] [notes:41] visiting http://54.214.7.161/notes/retry-change-queue/index.html
+2026-08-25 23:02:26,933 INFO    crawler: [206/500] [products:33] visiting http://54.214.7.161/products/timeout-object/
+2026-08-25 23:02:28,236 INFO    crawler: [207/500] [notes:42] visiting http://54.214.7.161/notes/domain-index/
+2026-08-25 23:02:29,533 INFO    crawler: [208/500] [wiki:42] visiting http://54.214.7.161/wiki/rule-extract-webhook/
+2026-08-25 23:02:30,829 INFO    crawler: [209/500] [docs:37] visiting http://54.214.7.161/docs/shard-viewport
+2026-08-25 23:02:32,122 INFO    crawler: [210/500] [notes:43] visiting http://54.214.7.161/notes/cache-header-detect/index.html
+2026-08-25 23:02:33,397 INFO    crawler: [211/500] [wiki:43] visiting http://54.214.7.161/wiki/report-batch
+2026-08-25 23:02:34,720 INFO    crawler: [212/500] [notes:44] visiting http://54.214.7.161/notes/proxy-notify/
+2026-08-25 23:02:35,993 INFO    crawler: [213/500] [products:34] visiting http://54.214.7.161/products/webhook-domain
+2026-08-25 23:02:37,292 INFO    crawler: [214/500] [products:35] visiting http://54.214.7.161/products/batch-queue
+2026-08-25 23:02:38,601 INFO    crawler: [215/500] [notes:45] visiting http://54.214.7.161/notes/cache-timeout-vector/
+2026-08-25 23:02:39,880 INFO    crawler: [216/500] [products:36] visiting http://54.214.7.161/products/anchor-cache
+2026-08-25 23:02:41,282 INFO    crawler: [217/500] [notes:46] visiting http://54.214.7.161/notes/cluster-detect
+2026-08-25 23:02:42,582 INFO    crawler: [218/500] [blog:36] visiting http://54.214.7.161/blog/schedule-digest/
+2026-08-25 23:02:43,859 INFO    crawler: [219/500] [products:37] visiting http://54.214.7.161/products/buffer-backoff/
+2026-08-25 23:02:45,145 INFO    crawler: [220/500] [notes:47] visiting http://54.214.7.161/notes/column-pixel-digest/?hl=en
+2026-08-25 23:02:46,448 INFO    crawler: [221/500] [products:38] visiting http://54.214.7.161/products/capture-socket-header/
+2026-08-25 23:02:47,751 INFO    crawler: [222/500] [docs:38] visiting http://54.214.7.161/docs/monitor-alert-header/?ref=nav
+2026-08-25 23:02:49,024 INFO    crawler: [223/500] [products:39] visiting http://54.214.7.161/products/webhook-domain/
+2026-08-25 23:02:50,408 INFO    crawler: [224/500] [blog:37] visiting http://54.214.7.161/blog/backoff-latency/
+2026-08-25 23:02:51,713 INFO    crawler: [225/500] [docs:39] visiting http://54.214.7.161/docs/archive-timeout/index.html
+2026-08-25 23:02:52,994 INFO    crawler: [226/500] [help:17] visiting http://54.214.7.161/help/render-search-monitor/
+2026-08-25 23:02:54,282 INFO    crawler: [227/500] [docs:40] visiting http://54.214.7.161/docs/visual-shard-visual
+2026-08-25 23:02:55,616 INFO    crawler: [228/500] [blog:38] visiting http://54.214.7.161/blog/pixel-region/?ref=related
+2026-08-25 23:02:56,919 INFO    crawler: [229/500] [products:40] visiting http://54.214.7.161/products/resolver-interval/index.html
+2026-08-25 23:02:58,203 INFO    crawler: [230/500] [notes:48] visiting http://54.214.7.161/notes/cluster-detect/index.html
+2026-08-25 23:02:59,495 INFO    crawler: [231/500] [products:41] visiting http://54.214.7.161/products/anchor-handshake/
+2026-08-25 23:03:00,780 INFO    crawler: [232/500] [blog:39] visiting http://54.214.7.161/blog/crawler-viewport
+2026-08-25 23:03:02,089 INFO    crawler: [233/500] [wiki:44] visiting http://54.214.7.161/wiki/sample-trend-metric/
+2026-08-25 23:03:03,453 INFO    crawler: [234/500] [blog:40] visiting http://54.214.7.161/blog/sample-record/
+2026-08-25 23:03:04,772 INFO    crawler: [235/500] [blog:41] visiting http://54.214.7.161/blog/history-schedule-visual/
+2026-08-25 23:03:06,064 INFO    crawler: [236/500] [blog:42] visiting http://54.214.7.161/blog/change-sync/
+2026-08-25 23:03:07,359 INFO    crawler: [237/500] [blog:43] visiting http://54.214.7.161/blog/object-timeout/
+2026-08-25 23:03:08,659 INFO    crawler: [238/500] [docs:41] visiting http://54.214.7.161/docs/webhook-ticket/index.html
+2026-08-25 23:03:09,949 INFO    crawler: [239/500] [help:18] visiting http://54.214.7.161/help/worker-gateway/?v=2
+2026-08-25 23:03:11,255 INFO    crawler: [240/500] [wiki:45] visiting http://54.214.7.161/wiki/stream-search-cookie/
+2026-08-25 23:03:12,541 INFO    crawler: [241/500] [docs:42] visiting http://54.214.7.161/docs/page-fragment-cookie
+2026-08-25 23:03:13,862 INFO    crawler: [242/500] [wiki:46] visiting http://54.214.7.161/wiki/label-threshold/?utm_source=sidebar
+2026-08-25 23:03:15,156 INFO    crawler: [243/500] [help:19] visiting http://54.214.7.161/help/upstream-schedule
+2026-08-25 23:03:16,453 INFO    crawler: [244/500] [help:20] visiting http://54.214.7.161/help/packet-search-schema
+2026-08-25 23:03:17,753 INFO    crawler: [245/500] [wiki:47] visiting http://54.214.7.161/wiki/cookie-vector
+2026-08-25 23:03:19,068 INFO    crawler: [246/500] [docs:43] visiting http://54.214.7.161/docs/retry-crawler-archive/
+2026-08-25 23:03:20,369 INFO    crawler: [247/500] [help:21] visiting http://54.214.7.161/help/viewport-page/
+2026-08-25 23:03:21,651 INFO    crawler: [248/500] [wiki:48] visiting http://54.214.7.161/wiki/label-metric/?v=4
+2026-08-25 23:03:22,935 INFO    crawler: [249/500] [products:42] visiting http://54.214.7.161/products/rule-gateway-embed/
+2026-08-25 23:03:24,223 INFO    crawler: [250/500] [blog:44] visiting http://54.214.7.161/blog/capture-header-storage/
+2026-08-25 23:03:25,514 INFO    crawler: [251/500] [docs:44] visiting http://54.214.7.161/docs/history-baseline/?hl=en
+2026-08-25 23:03:26,801 INFO    crawler: [252/500] [blog:45] visiting http://54.214.7.161/blog/detect-stream
+2026-08-25 23:03:28,117 INFO    crawler: [253/500] [docs:45] visiting http://54.214.7.161/docs/packet-history-history/
+2026-08-25 23:03:29,409 INFO    crawler: [254/500] [notes:49] visiting http://54.214.7.161/notes/cache-trend-gateway/
+2026-08-25 23:03:30,722 INFO    crawler: [255/500] [notes:50] visiting http://54.214.7.161/notes/storage-resolver-packet/
+2026-08-25 23:03:32,013 INFO    crawler: [256/500] [blog:46] visiting http://54.214.7.161/blog/header-stream/
+2026-08-25 23:03:33,340 INFO    crawler: [257/500] [blog:47] visiting http://54.214.7.161/blog/change-policy/
+2026-08-25 23:03:34,635 INFO    crawler: [258/500] [notes:51] visiting http://54.214.7.161/notes/anchor-digest-snapshot
+2026-08-25 23:03:35,961 INFO    crawler: [259/500] [docs:46] visiting http://54.214.7.161/docs/interval-gateway
+2026-08-25 23:03:37,283 INFO    crawler: [260/500] [wiki:49] visiting http://54.214.7.161/wiki/monitor-proxy-policy/?utm_source=internal
+2026-08-25 23:03:38,579 INFO    crawler: [261/500] [products:43] visiting http://54.214.7.161/products/rule-proxy/?utm_source=internal
+2026-08-25 23:03:39,861 INFO    crawler: [262/500] [docs:47] visiting http://54.214.7.161/docs/batch-fragment/
+2026-08-25 23:03:41,159 INFO    crawler: [263/500] [help:22] visiting http://54.214.7.161/help/anomaly-selector-handshake/?utm_source=internal
+2026-08-25 23:03:42,453 INFO    crawler: [264/500] [help:23] visiting http://54.214.7.161/help/metric-object/
+2026-08-25 23:03:43,736 INFO    crawler: [265/500] [blog:48] visiting http://54.214.7.161/blog/pipeline-packet-signal/?v=4
+2026-08-25 23:03:45,016 INFO    crawler: [266/500] [blog:49] visiting http://54.214.7.161/blog/batch-viewport-column
+2026-08-25 23:03:46,313 INFO    crawler: [267/500] [notes:52] visiting http://54.214.7.161/notes/field-ledger/
+2026-08-25 23:03:47,616 INFO    crawler: [268/500] [help:24] visiting http://54.214.7.161/help/classify-retry/?hl=en
+2026-08-25 23:03:48,897 INFO    crawler: [269/500] [blog:50] visiting http://54.214.7.161/blog/worker-schema-page/
+2026-08-25 23:03:50,206 INFO    crawler: [270/500] [docs:48] visiting http://54.214.7.161/docs/render-zone/
+2026-08-25 23:03:51,479 INFO    crawler: [271/500] [products:44] visiting http://54.214.7.161/products/record-classify
+2026-08-25 23:03:52,787 INFO    crawler: [272/500] [help:25] visiting http://54.214.7.161/help/history-vector/
+2026-08-25 23:03:54,105 INFO    crawler: [273/500] [notes:53] visiting http://54.214.7.161/notes/zone-trend
+2026-08-25 23:03:55,478 INFO    crawler: [274/500] [docs:49] visiting http://54.214.7.161/docs/page-handshake
+2026-08-25 23:03:56,914 INFO    crawler: [275/500] [products:45] visiting http://54.214.7.161/products/buffer-backoff
+2026-08-25 23:03:58,218 INFO    crawler: [276/500] [wiki:50] visiting http://54.214.7.161/wiki/timeout-signal-audit/
+2026-08-25 23:03:59,515 INFO    crawler: [277/500] [notes:54] visiting http://54.214.7.161/notes/handshake-metric-signal/
+2026-08-25 23:04:00,817 INFO    crawler: [278/500] [wiki:51] visiting http://54.214.7.161/wiki/timeout-filter/
+2026-08-25 23:04:02,136 INFO    crawler: [279/500] [products:46] visiting http://54.214.7.161/products/backoff-queue-region
+2026-08-25 23:04:03,503 INFO    crawler: [280/500] [notes:55] visiting http://54.214.7.161/notes/search-change-fragment/
+2026-08-25 23:04:04,831 INFO    crawler: [281/500] [notes:56] visiting http://54.214.7.161/notes/audit-pipeline/
+2026-08-25 23:04:06,143 INFO    crawler: [282/500] [wiki:52] visiting http://54.214.7.161/wiki/filter-upstream
+2026-08-25 23:04:07,442 INFO    crawler: [283/500] [products:47] visiting http://54.214.7.161/products/detect-cache-origin/?v=1
+2026-08-25 23:04:08,735 INFO    crawler: [284/500] [blog:51] visiting http://54.214.7.161/blog/policy-session-domain/
+2026-08-25 23:04:10,039 INFO    crawler: [285/500] [products:48] visiting http://54.214.7.161/products/embed-object/index.html
+2026-08-25 23:04:11,379 INFO    crawler: [286/500] [notes:57] visiting http://54.214.7.161/notes/record-crawler/index.html
+2026-08-25 23:04:12,685 INFO    crawler: [287/500] [help:26] visiting http://54.214.7.161/help/proxy-history/?ref=related
+2026-08-25 23:04:13,998 INFO    crawler: [288/500] [blog:52] visiting http://54.214.7.161/blog/mirror-socket/index.html
+2026-08-25 23:04:15,313 INFO    crawler: [289/500] [help:27] visiting http://54.214.7.161/help/visual-metric-packet/
+2026-08-25 23:04:16,636 INFO    crawler: [290/500] [help:28] visiting http://54.214.7.161/help/trend-schema/index.html
+2026-08-25 23:04:17,947 INFO    crawler: [291/500] [help:29] visiting http://54.214.7.161/help/proxy-ledger/
+2026-08-25 23:04:19,238 INFO    crawler: [292/500] [notes:58] visiting http://54.214.7.161/notes/bucket-pixel-alert/
+2026-08-25 23:04:20,548 INFO    crawler: [293/500] [wiki:53] visiting http://54.214.7.161/wiki/buffer-parse/
+2026-08-25 23:04:21,852 INFO    crawler: [294/500] [docs:50] visiting http://54.214.7.161/docs/monitor-alert-header
+2026-08-25 23:04:23,190 INFO    crawler: [295/500] [wiki:54] visiting http://54.214.7.161/wiki/visual-page/?utm_source=internal
+2026-08-25 23:04:24,503 INFO    crawler: [296/500] [docs:51] visiting http://54.214.7.161/docs/embed-column/
+2026-08-25 23:04:25,847 INFO    crawler: [297/500] [blog:53] visiting http://54.214.7.161/blog/metric-classify/?utm_source=sidebar
+2026-08-25 23:04:27,151 INFO    crawler: [298/500] [docs:52] visiting http://54.214.7.161/docs/parse-interval/
+2026-08-25 23:04:28,480 INFO    crawler: [299/500] [products:49] visiting http://54.214.7.161/products/field-origin-trend/
+2026-08-25 23:04:29,784 INFO    crawler: [300/500] [wiki:55] visiting http://54.214.7.161/wiki/change-monitor
+2026-08-25 23:04:31,129 INFO    crawler: [301/500] [docs:53] visiting http://54.214.7.161/docs/page-handshake/index.html
+2026-08-25 23:04:32,415 INFO    crawler: [302/500] [notes:59] visiting http://54.214.7.161/notes/queue-search-storage/?ref=nav
+2026-08-25 23:04:33,731 INFO    crawler: [303/500] [help:30] visiting http://54.214.7.161/help/change-payload/?v=6
+2026-08-25 23:04:35,073 INFO    crawler: [304/500] [products:50] visiting http://54.214.7.161/products/webhook-archive
+2026-08-25 23:04:36,400 INFO    crawler: [305/500] [blog:54] visiting http://54.214.7.161/blog/fragment-page
+2026-08-25 23:04:37,724 INFO    crawler: [306/500] [help:31] visiting http://54.214.7.161/help/element-archive-session/
+2026-08-25 23:04:39,037 INFO    crawler: [307/500] [products:51] visiting http://54.214.7.161/products/schedule-policy-session/
+2026-08-25 23:04:40,353 INFO    crawler: [308/500] [help:32] visiting http://54.214.7.161/help/sample-pixel/
+2026-08-25 23:04:41,659 INFO    crawler: [309/500] [notes:60] visiting http://54.214.7.161/notes/parse-origin
+2026-08-25 23:04:43,003 INFO    crawler: [310/500] [notes:61] visiting http://54.214.7.161/notes/latency-ledger-anchor/
+2026-08-25 23:04:44,311 INFO    crawler: [311/500] [wiki:56] visiting http://54.214.7.161/wiki/index-proxy/
+2026-08-25 23:04:45,621 INFO    crawler: [312/500] [docs:54] visiting http://54.214.7.161/docs/notify-change/
+2026-08-25 23:04:46,943 INFO    crawler: [313/500] [blog:55] visiting http://54.214.7.161/blog/resolver-change-sync/
+2026-08-25 23:04:48,255 INFO    crawler: [314/500] [help:33] visiting http://54.214.7.161/help/cache-ledger/?ref=related
+2026-08-25 23:04:49,580 INFO    crawler: [315/500] [blog:56] visiting http://54.214.7.161/blog/webhook-crawler
+2026-08-25 23:04:50,951 INFO    crawler: [316/500] [blog:57] visiting http://54.214.7.161/blog/search-cookie-audit
+2026-08-25 23:04:52,279 INFO    crawler: [317/500] [help:34] visiting http://54.214.7.161/help/ticket-selector-extract
+2026-08-25 23:04:53,650 INFO    crawler: [318/500] [docs:55] visiting http://54.214.7.161/docs/fragment-queue-baseline/
+2026-08-25 23:04:54,966 INFO    crawler: [319/500] [docs:56] visiting http://54.214.7.161/docs/rule-region-snapshot
+2026-08-25 23:04:56,303 INFO    crawler: [320/500] [notes:62] visiting http://54.214.7.161/notes/archive-capture/
+2026-08-25 23:04:57,614 INFO    crawler: [321/500] [notes:63] visiting http://54.214.7.161/notes/anchor-digest-snapshot/
+2026-08-25 23:04:58,939 INFO    crawler: [322/500] [wiki:57] visiting http://54.214.7.161/wiki/anchor-change
+2026-08-25 23:05:00,285 INFO    crawler: [323/500] [docs:57] visiting http://54.214.7.161/docs/resolver-index/
+2026-08-25 23:05:01,631 INFO    crawler: [324/500] [products:52] visiting http://54.214.7.161/products/monitor-render/
+2026-08-25 23:05:02,987 INFO    crawler: [325/500] [wiki:58] visiting http://54.214.7.161/wiki/report-batch/
+2026-08-25 23:05:04,322 INFO    crawler: [326/500] [products:53] visiting http://54.214.7.161/products/proxy-selector/
+2026-08-25 23:05:05,665 INFO    crawler: [327/500] [products:54] visiting http://54.214.7.161/products/anchor-cache/
+2026-08-25 23:05:06,973 INFO    crawler: [328/500] [notes:64] visiting http://54.214.7.161/notes/backoff-stream/index.html
+2026-08-25 23:05:08,295 INFO    crawler: [329/500] [notes:65] visiting http://54.214.7.161/notes/handshake-metric-signal
+2026-08-25 23:05:09,635 INFO    crawler: [330/500] [products:55] visiting http://54.214.7.161/products/record-classify/
+2026-08-25 23:05:10,975 INFO    crawler: [331/500] [notes:66] visiting http://54.214.7.161/notes/cache-trend-gateway
+2026-08-25 23:05:12,317 INFO    crawler: [332/500] [notes:67] visiting http://54.214.7.161/notes/anchor-pipeline-upstream/
+2026-08-25 23:05:13,626 INFO    crawler: [333/500] [blog:58] visiting http://54.214.7.161/blog/resolver-pixel/?utm_source=sidebar
+2026-08-25 23:05:14,990 INFO    crawler: [334/500] [products:56] visiting http://54.214.7.161/products/origin-audit/
+2026-08-25 23:05:16,378 INFO    crawler: [335/500] [products:57] visiting http://54.214.7.161/products/report-sample/
+2026-08-25 23:05:17,740 INFO    crawler: [336/500] [products:58] visiting http://54.214.7.161/products/report-sample
+2026-08-25 23:05:19,162 INFO    crawler: [337/500] [blog:59] visiting http://54.214.7.161/blog/change-cache
+2026-08-25 23:05:20,517 INFO    crawler: [338/500] [products:59] visiting http://54.214.7.161/products/stream-alert/?ref=nav
+2026-08-25 23:05:21,835 INFO    crawler: [339/500] [blog:60] visiting http://54.214.7.161/blog/crawler-viewport/
+2026-08-25 23:05:23,151 INFO    crawler: [340/500] [notes:68] visiting http://54.214.7.161/notes/socket-mirror-timeout/
+2026-08-25 23:05:24,466 INFO    crawler: [341/500] [help:35] visiting http://54.214.7.161/help/compare-parse/?utm_source=internal
+2026-08-25 23:05:25,790 INFO    crawler: [342/500] [docs:58] visiting http://54.214.7.161/docs/embed-schema-object
+2026-08-25 23:05:27,125 INFO    crawler: [343/500] [wiki:59] visiting http://54.214.7.161/wiki/embed-search
+2026-08-25 23:05:28,454 INFO    crawler: [344/500] [blog:61] visiting http://54.214.7.161/blog/upstream-worker
+2026-08-25 23:05:29,788 INFO    crawler: [345/500] [wiki:60] visiting http://54.214.7.161/wiki/diff-schedule/
+2026-08-25 23:05:31,085 INFO    crawler: [346/500] [help:36] visiting http://54.214.7.161/help/proxy-history
+2026-08-25 23:05:32,419 INFO    crawler: [347/500] [products:60] visiting http://54.214.7.161/products/resolver-alert/
+2026-08-25 23:05:33,725 INFO    crawler: [348/500] [wiki:61] visiting http://54.214.7.161/wiki/snapshot-ticket-parse/
+2026-08-25 23:05:35,045 INFO    crawler: [349/500] [docs:59] visiting http://54.214.7.161/docs/page-fragment-cookie/
+2026-08-25 23:05:36,340 INFO    crawler: [350/500] [products:61] visiting http://54.214.7.161/products/digest-socket-crawler
+2026-08-25 23:05:37,655 INFO    crawler: [351/500] [help:37] visiting http://54.214.7.161/help/upstream-schedule/
+2026-08-25 23:05:38,972 INFO    crawler: [352/500] [help:38] visiting http://54.214.7.161/help/packet-search-schema/
+2026-08-25 23:05:40,292 INFO    crawler: [353/500] [help:39] visiting http://54.214.7.161/help/extract-resolver/?hl=en
+2026-08-25 23:05:41,572 INFO    crawler: [354/500] [products:62] visiting http://54.214.7.161/products/history-crawler/index.html
+2026-08-25 23:05:42,872 INFO    crawler: [355/500] [notes:69] visiting http://54.214.7.161/notes/report-bucket
+2026-08-25 23:05:44,190 INFO    crawler: [356/500] [blog:62] visiting http://54.214.7.161/blog/batch-parse-header/index.html
+2026-08-25 23:05:45,481 INFO    crawler: [357/500] [help:40] visiting http://54.214.7.161/help/socket-upstream/?hl=en
+2026-08-25 23:05:46,785 INFO    crawler: [358/500] [blog:63] visiting http://54.214.7.161/blog/pixel-region
+2026-08-25 23:05:48,101 INFO    crawler: [359/500] [notes:70] visiting http://54.214.7.161/notes/handshake-digest
+2026-08-25 23:05:49,413 INFO    crawler: [360/500] [notes:71] visiting http://54.214.7.161/notes/upstream-policy
+2026-08-25 23:05:50,763 INFO    crawler: [361/500] [blog:64] visiting http://54.214.7.161/blog/bucket-gateway-timeout/
+2026-08-25 23:05:52,055 INFO    crawler: [362/500] [products:63] visiting http://54.214.7.161/products/visual-interval/
+2026-08-25 23:05:53,336 INFO    crawler: [363/500] [blog:65] visiting http://54.214.7.161/blog/ledger-rule/
+2026-08-25 23:05:54,627 INFO    crawler: [364/500] [blog:66] visiting http://54.214.7.161/blog/batch-viewport-column/
+2026-08-25 23:05:55,920 INFO    crawler: [365/500] [wiki:62] visiting http://54.214.7.161/wiki/ledger-fragment/
+2026-08-25 23:05:57,210 INFO    crawler: [366/500] [docs:60] visiting http://54.214.7.161/docs/interval-gateway/
+2026-08-25 23:05:58,493 INFO    crawler: [367/500] [notes:72] visiting http://54.214.7.161/notes/sync-object/
+2026-08-25 23:05:59,781 INFO    crawler: [368/500] [wiki:63] visiting http://54.214.7.161/wiki/anchor-change/
+2026-08-25 23:06:01,058 INFO    crawler: [369/500] [wiki:64] visiting http://54.214.7.161/wiki/pixel-report/?hl=en
+2026-08-25 23:06:02,377 INFO    crawler: [370/500] [products:64] visiting http://54.214.7.161/products/monitor-render
+2026-08-25 23:06:03,688 INFO    crawler: [371/500] [docs:61] visiting http://54.214.7.161/docs/pixel-object-fragment/
+2026-08-25 23:06:04,994 INFO    crawler: [372/500] [blog:67] visiting http://54.214.7.161/blog/search-cookie-audit/
+2026-08-25 23:06:06,293 INFO    crawler: [373/500] [blog:68] visiting http://54.214.7.161/blog/replica-render-render/?ref=nav
+2026-08-25 23:06:07,598 INFO    crawler: [374/500] [wiki:65] visiting http://54.214.7.161/wiki/region-schema-storage/
+2026-08-25 23:06:08,902 INFO    crawler: [375/500] [help:41] visiting http://54.214.7.161/help/replica-anchor-worker/?utm_source=sidebar
+2026-08-25 23:06:10,239 INFO    crawler: [376/500] [docs:62] visiting http://54.214.7.161/docs/ledger-backoff/
+2026-08-25 23:06:11,536 INFO    crawler: [377/500] [wiki:66] visiting http://54.214.7.161/wiki/storage-session/
+2026-08-25 23:06:12,822 INFO    crawler: [378/500] [docs:63] visiting http://54.214.7.161/docs/parse-interval
+2026-08-25 23:06:14,122 INFO    crawler: [379/500] [wiki:67] visiting http://54.214.7.161/wiki/selector-ledger-header/
+2026-08-25 23:06:15,436 INFO    crawler: [380/500] [notes:73] visiting http://54.214.7.161/notes/ticket-proxy/
+2026-08-25 23:06:16,729 INFO    crawler: [381/500] [docs:64] visiting http://54.214.7.161/docs/channel-threshold/
+2026-08-25 23:06:18,017 INFO    crawler: [382/500] [help:42] visiting http://54.214.7.161/help/stream-pixel/
+2026-08-25 23:06:19,295 INFO    crawler: [383/500] [blog:69] visiting http://54.214.7.161/blog/threshold-origin
+2026-08-25 23:06:20,625 INFO    crawler: [384/500] [wiki:68] visiting http://54.214.7.161/wiki/history-history/
+2026-08-25 23:06:21,917 INFO    crawler: [385/500] [wiki:69] visiting http://54.214.7.161/wiki/embed-search/
+2026-08-25 23:06:23,194 INFO    crawler: [386/500] [notes:74] visiting http://54.214.7.161/notes/archive-region
+2026-08-25 23:06:24,512 INFO    crawler: [387/500] [docs:65] visiting http://54.214.7.161/docs/sample-bucket-capture/?ref=related
+2026-08-25 23:06:25,797 INFO    crawler: [388/500] [blog:70] visiting http://54.214.7.161/blog/record-header-anchor/index.html
+2026-08-25 23:06:27,077 INFO    crawler: [389/500] [docs:66] visiting http://54.214.7.161/docs/alert-threshold-storage/?v=5
+2026-08-25 23:06:28,378 INFO    crawler: [390/500] [blog:71] visiting http://54.214.7.161/blog/origin-alert
+2026-08-25 23:06:29,690 INFO    crawler: [391/500] [blog:72] visiting http://54.214.7.161/blog/batch-extract-pipeline/
+2026-08-25 23:06:30,984 INFO    crawler: [392/500] [blog:73] visiting http://54.214.7.161/blog/audit-payload-bucket/
+2026-08-25 23:06:32,272 INFO    crawler: [393/500] [docs:67] visiting http://54.214.7.161/docs/alert-threshold-storage
+2026-08-25 23:06:33,579 INFO    crawler: [394/500] [blog:74] visiting http://54.214.7.161/blog/socket-timeout-monitor/
+2026-08-25 23:06:34,876 INFO    crawler: [395/500] [products:65] visiting http://54.214.7.161/products/render-sync/?utm_source=sidebar
+2026-08-25 23:06:36,172 INFO    crawler: [396/500] [products:66] visiting http://54.214.7.161/products/selector-sample/
+2026-08-25 23:06:37,456 INFO    crawler: [397/500] [products:67] visiting http://54.214.7.161/products/webhook-archive/
+2026-08-25 23:06:38,751 INFO    crawler: [398/500] [notes:75] visiting http://54.214.7.161/notes/change-extract/
+2026-08-25 23:06:40,041 INFO    crawler: [399/500] [notes:76] visiting http://54.214.7.161/notes/threshold-rule-signal/
+2026-08-25 23:06:41,330 INFO    crawler: [400/500] [wiki:70] visiting http://54.214.7.161/wiki/embed-webhook/
+2026-08-25 23:06:42,625 INFO    crawler: [401/500] [products:68] visiting http://54.214.7.161/products/visual-viewport-interval
+2026-08-25 23:06:43,955 INFO    crawler: [402/500] [blog:75] visiting http://54.214.7.161/blog/latency-pipeline-digest
+2026-08-25 23:06:45,408 INFO    crawler: [403/500] [docs:68] visiting http://54.214.7.161/docs/region-latency-sample/
+2026-08-25 23:06:46,702 INFO    crawler: [404/500] [docs:69] visiting http://54.214.7.161/docs/upstream-vector/?ref=nav
+2026-08-25 23:06:47,990 INFO    crawler: [405/500] [docs:70] visiting http://54.214.7.161/docs/metric-interval-latency
+2026-08-25 23:06:49,289 INFO    crawler: [406/500] [docs:71] visiting http://54.214.7.161/docs/domain-change-selector/
+2026-08-25 23:06:50,618 INFO    crawler: [407/500] [help:43] visiting http://54.214.7.161/help/ticket-selector-extract/
+2026-08-25 23:06:51,922 INFO    crawler: [408/500] [docs:72] visiting http://54.214.7.161/docs/rule-region-snapshot/
+2026-08-25 23:06:53,216 INFO    crawler: [409/500] [docs:73] visiting http://54.214.7.161/docs/batch-baseline-cookie/
+2026-08-25 23:06:54,491 INFO    crawler: [410/500] [blog:76] visiting http://54.214.7.161/blog/socket-viewport-domain/
+2026-08-25 23:06:55,784 INFO    crawler: [411/500] [help:44] visiting http://54.214.7.161/help/zone-index-cookie
+2026-08-25 23:06:57,084 INFO    crawler: [412/500] [blog:77] visiting http://54.214.7.161/blog/sample-snapshot
+2026-08-25 23:06:58,399 INFO    crawler: [413/500] [docs:74] visiting http://54.214.7.161/docs/classify-mirror/?v=9
+2026-08-25 23:06:59,713 INFO    crawler: [414/500] [docs:75] visiting http://54.214.7.161/docs/storage-channel-vector/?v=8
+2026-08-25 23:07:01,010 INFO    crawler: [415/500] [docs:76] visiting http://54.214.7.161/docs/socket-signal-anomaly
+2026-08-25 23:07:02,344 INFO    crawler: [416/500] [blog:78] visiting http://54.214.7.161/blog/change-cache/
+2026-08-25 23:07:03,635 INFO    crawler: [417/500] [notes:77] visiting http://54.214.7.161/notes/digest-zone-label/
+2026-08-25 23:07:04,960 INFO    crawler: [418/500] [docs:77] visiting http://54.214.7.161/docs/storage-payload/index.html
+2026-08-25 23:07:06,285 INFO    crawler: [419/500] [docs:78] visiting http://54.214.7.161/docs/embed-schema-object/
+2026-08-25 23:07:07,582 INFO    crawler: [420/500] [blog:79] visiting http://54.214.7.161/blog/upstream-worker/
+2026-08-25 23:07:08,875 INFO    crawler: [421/500] [notes:78] visiting http://54.214.7.161/notes/filter-session
+2026-08-25 23:07:10,188 INFO    crawler: [422/500] [notes:79] visiting http://54.214.7.161/notes/anomaly-baseline-archive
+2026-08-25 23:07:11,506 INFO    crawler: [423/500] [products:69] visiting http://54.214.7.161/products/backoff-payload-diff
+2026-08-25 23:07:12,813 INFO    crawler: [424/500] [notes:80] visiting http://54.214.7.161/notes/handshake-digest/
+2026-08-25 23:07:14,092 INFO    crawler: [425/500] [blog:80] visiting http://54.214.7.161/blog/replica-pipeline/
+2026-08-25 23:07:15,399 INFO    crawler: [426/500] [help:45] visiting http://54.214.7.161/help/baseline-cache/
+2026-08-25 23:07:16,693 INFO    crawler: [427/500] [notes:81] visiting http://54.214.7.161/notes/threshold-schedule/?utm_source=sidebar
+2026-08-25 23:07:17,988 INFO    crawler: [428/500] [products:70] visiting http://54.214.7.161/products/ticket-element/
+2026-08-25 23:07:19,300 INFO    crawler: [429/500] [blog:81] visiting http://54.214.7.161/blog/monitor-filter-session/
+2026-08-25 23:07:20,612 INFO    crawler: [430/500] [notes:82] visiting http://54.214.7.161/notes/replica-rule
+2026-08-25 23:07:21,939 INFO    crawler: [431/500] [notes:83] visiting http://54.214.7.161/notes/audit-pipeline
+2026-08-25 23:07:23,258 INFO    crawler: [432/500] [docs:79] visiting http://54.214.7.161/docs/bucket-packet-threshold/
+2026-08-25 23:07:24,546 INFO    crawler: [433/500] [products:71] visiting http://54.214.7.161/products/filter-trend-object/
+2026-08-25 23:07:25,847 INFO    crawler: [434/500] [wiki:71] visiting http://54.214.7.161/wiki/label-metric
+2026-08-25 23:07:27,177 INFO    crawler: [435/500] [wiki:72] visiting http://54.214.7.161/wiki/render-parse/
+2026-08-25 23:07:28,471 INFO    crawler: [436/500] [docs:80] visiting http://54.214.7.161/docs/audit-retry-selector/index.html
+2026-08-25 23:07:29,783 INFO    crawler: [437/500] [help:46] visiting http://54.214.7.161/help/pipeline-schema
+2026-08-25 23:07:31,088 INFO    crawler: [438/500] [docs:81] visiting http://54.214.7.161/docs/ledger-signal/
+2026-08-25 23:07:32,391 INFO    crawler: [439/500] [blog:82] visiting http://54.214.7.161/blog/threshold-origin/
+2026-08-25 23:07:33,697 INFO    crawler: [440/500] [wiki:73] visiting http://54.214.7.161/wiki/rule-change
+2026-08-25 23:07:35,042 INFO    crawler: [441/500] [products:72] visiting http://54.214.7.161/products/sample-session-crawler/
+2026-08-25 23:07:36,356 INFO    crawler: [442/500] [docs:82] visiting http://54.214.7.161/docs/worker-record/
+2026-08-25 23:07:37,657 INFO    crawler: [443/500] [help:47] visiting http://54.214.7.161/help/ticket-gateway
+2026-08-25 23:07:38,984 INFO    crawler: [444/500] [products:73] visiting http://54.214.7.161/products/visual-viewport-interval/
+2026-08-25 23:07:40,268 INFO    crawler: [445/500] [wiki:74] visiting http://54.214.7.161/wiki/trend-ledger-payload/?utm_source=internal
+2026-08-25 23:07:41,576 INFO    crawler: [446/500] [wiki:75] visiting http://54.214.7.161/wiki/ledger-fragment
+2026-08-25 23:07:42,873 INFO    crawler: [447/500] [blog:83] visiting http://54.214.7.161/blog/sample-snapshot/?v=6
+2026-08-25 23:07:44,166 INFO    crawler: [448/500] [help:48] visiting http://54.214.7.161/help/replica-handshake-cookie
+2026-08-25 23:07:45,510 INFO    crawler: [449/500] [products:74] visiting http://54.214.7.161/products/resolver-alert
+2026-08-25 23:07:46,828 INFO    crawler: [450/500] [notes:84] visiting http://54.214.7.161/notes/session-proxy/
+2026-08-25 23:07:48,122 INFO    crawler: [451/500] [products:75] visiting http://54.214.7.161/products/proxy-page/index.html
+2026-08-25 23:07:49,409 INFO    crawler: [452/500] [docs:83] visiting http://54.214.7.161/docs/webhook-queue
+2026-08-25 23:07:50,750 INFO    crawler: [453/500] [blog:84] visiting http://54.214.7.161/blog/pipeline-packet-signal
+2026-08-25 23:07:52,057 INFO    crawler: [454/500] [notes:85] visiting http://54.214.7.161/notes/filter-session/
+2026-08-25 23:07:53,348 INFO    crawler: [455/500] [products:76] visiting http://54.214.7.161/products/backoff-payload-diff/
+2026-08-25 23:07:54,634 INFO    crawler: [456/500] [products:77] visiting http://54.214.7.161/products/payload-bucket-ledger/?utm_source=sidebar
+2026-08-25 23:07:55,938 INFO    crawler: [457/500] [help:49] visiting http://54.214.7.161/help/pipeline-schema/
+2026-08-25 23:07:57,230 INFO    crawler: [458/500] [wiki:76] visiting http://54.214.7.161/wiki/change-capture
+2026-08-25 23:07:58,547 INFO    crawler: [459/500] [docs:84] visiting http://54.214.7.161/docs/change-buffer/?utm_source=sidebar
+2026-08-25 23:07:59,830 INFO    crawler: [460/500] [blog:85] visiting http://54.214.7.161/blog/queue-viewport-cache
+2026-08-25 23:08:01,132 INFO    crawler: [461/500] [docs:85] visiting http://54.214.7.161/docs/mirror-origin
+2026-08-25 23:08:02,455 INFO    crawler: [462/500] [wiki:77] visiting http://54.214.7.161/wiki/zone-channel
+2026-08-25 23:08:03,772 INFO    crawler: [463/500] [blog:86] visiting http://54.214.7.161/blog/mirror-socket
+2026-08-25 23:08:05,105 INFO    crawler: [464/500] [docs:86] visiting http://54.214.7.161/docs/webhook-queue/
+2026-08-25 23:08:06,406 INFO    crawler: [465/500] [wiki:78] visiting http://54.214.7.161/wiki/change-capture/
+2026-08-25 23:08:07,694 INFO    crawler: [466/500] [help:50] visiting http://54.214.7.161/help/field-buffer-timeout/?utm_source=sidebar
+2026-08-25 23:08:08,998 INFO    crawler: [467/500] [products:78] visiting http://54.214.7.161/products/history-capture/?ref=nav
+2026-08-25 23:08:10,297 INFO    crawler: [468/500] [help:51] visiting http://54.214.7.161/help/compare-parse
+2026-08-25 23:08:11,617 INFO    crawler: [469/500] [wiki:79] visiting http://54.214.7.161/wiki/zone-channel/
+2026-08-25 23:08:12,911 INFO    crawler: [470/500] [notes:86] visiting http://54.214.7.161/notes/diff-socket-socket/?ref=related
+2026-08-25 23:08:14,191 INFO    crawler.audit: FOUND VISUALPING{2dd5105a3fad0ef3}  (vector 3.29 — Rendered DOM (post-JS) full-text scan, incl. open shadow DOM @ http://54.214.7.161/notes/diff-socket-socket/?ref=related)
+2026-08-25 23:08:14,198 INFO    crawler: [471/500] [docs:87] visiting http://54.214.7.161/docs/diff-history/
+2026-08-25 23:08:15,505 INFO    crawler: [472/500] [blog:87] visiting http://54.214.7.161/blog/crawler-fragment-threshold
+2026-08-25 23:08:16,807 INFO    crawler: [473/500] [notes:87] visiting http://54.214.7.161/notes/cluster-cache-report/index.html
+2026-08-25 23:08:18,094 INFO    crawler: [474/500] [blog:88] visiting http://54.214.7.161/blog/handshake-monitor-anchor/
+2026-08-25 23:08:19,432 INFO    crawler: [475/500] [blog:89] visiting http://54.214.7.161/blog/crawler-fragment-threshold/
+2026-08-25 23:08:20,734 INFO    crawler: [476/500] [products:79] visiting http://54.214.7.161/products/sample-session-crawler
+2026-08-25 23:08:22,047 INFO    crawler: [477/500] [wiki:80] visiting http://54.214.7.161/wiki/detect-embed/
+2026-08-25 23:08:23,342 INFO    crawler.audit: FOUND VISUALPING{73c8f3073fdc5f74}  (vector 3.10 — Non-rendered text attributes (alt/title/aria-*/placeholder) @ http://54.214.7.161/wiki/detect-embed/)
+2026-08-25 23:08:23,348 INFO    crawler: [478/500] [docs:88] visiting http://54.214.7.161/docs/packet-replica-packet
+2026-08-25 23:08:25,160 INFO    main: ==============================================================================
+2026-08-25 23:08:25,160 INFO    main: CRAWL COMPLETE
+2026-08-25 23:08:25,160 INFO    main: ==============================================================================
+2026-08-25 23:08:25,160 INFO    main: Pages visited: 478/500
+2026-08-25 23:08:25,160 INFO    main: Passwords found: 7/8
+2026-08-25 23:08:25,160 INFO    main:   VISUALPING{db7e533a9cef7f72}  <- 3.14 (Image metadata (EXIF/tEXt/IPTC/XMP/...)) @ http://54.214.7.161/static/img/field-visit.jpg
+2026-08-25 23:08:25,160 INFO    main:   VISUALPING{fb725e1f3d6728b1}  <- 3.5 (JS (inline/external source, console output)) @ http://54.214.7.161/static/js/theme-switcher.js
+2026-08-25 23:08:25,160 INFO    main:   VISUALPING{349a583fba34c301}  <- 3.5 (JS (inline/external source, console output)) @ http://54.214.7.161/static/js/analytics.js
+2026-08-25 23:08:25,160 INFO    main:   VISUALPING{e1c2e40cf01c17cc}  <- 3.19 (Rendered text in an image (OCR)) @ http://54.214.7.161/static/img/whiteboard-scan.png
+2026-08-25 23:08:25,160 INFO    main:   VISUALPING{64d26185a2f94e34}  <- 3.1 (HTTP response headers) @ http://54.214.7.161/products/filter-gateway/
+2026-08-25 23:08:25,161 INFO    main:   VISUALPING{2dd5105a3fad0ef3}  <- 3.29 (Rendered DOM (post-JS) full-text scan, incl. open shadow DOM) @ http://54.214.7.161/notes/diff-socket-socket/?ref=related
+2026-08-25 23:08:25,161 INFO    main:   VISUALPING{73c8f3073fdc5f74}  <- 3.10 (Non-rendered text attributes (alt/title/aria-*/placeholder)) @ http://54.214.7.161/wiki/detect-embed/
+2026-08-25 23:08:25,161 INFO    main: [!] 1 password(s) still missing — see the SECTION BREAKDOWN below for under-crawled sections, and the POSTPONED-VECTOR TALLY for candidates worth promoting.
+2026-08-25 23:08:25,161 INFO    main: ------------------------------------------------------------------------------
+2026-08-25 23:08:25,161 INFO    main: SECTION BREAKDOWN — pages visited per top-level path segment
+2026-08-25 23:08:25,161 INFO    main: ------------------------------------------------------------------------------
+2026-08-25 23:08:25,161 INFO    main:   blog                 89
+2026-08-25 23:08:25,161 INFO    main:   docs                 88
+2026-08-25 23:08:25,161 INFO    main:   notes                87
+2026-08-25 23:08:25,161 INFO    main:   wiki                 80
+2026-08-25 23:08:25,161 INFO    main:   products             79
+2026-08-25 23:08:25,161 INFO    main:   help                 51
+2026-08-25 23:08:25,161 INFO    main:   report               2
+2026-08-25 23:08:25,161 INFO    main:   _root                1
+2026-08-25 23:08:25,161 INFO    main:   status               1
+2026-08-25 23:08:25,161 INFO    main: ------------------------------------------------------------------------------
+2026-08-25 23:08:25,161 INFO    main: ACTIVE-VECTOR HITS (§3) — which vectors actually produced a password
+2026-08-25 23:08:25,161 INFO    main: ------------------------------------------------------------------------------
+2026-08-25 23:08:25,161 INFO    main:   3.1      2    hit(s)  HTTP response headers
+2026-08-25 23:08:25,161 INFO    main:   3.10     1    hit(s)  Non-rendered text attributes (alt/title/aria-*/placeholder)
+2026-08-25 23:08:25,162 INFO    main:   3.14     20   hit(s)  Image metadata (EXIF/tEXt/IPTC/XMP/...)
+2026-08-25 23:08:25,162 INFO    main:   3.19     19   hit(s)  Rendered text in an image (OCR)
+2026-08-25 23:08:25,162 INFO    main:   3.29     2    hit(s)  Rendered DOM (post-JS) full-text scan, incl. open shadow DOM
+2026-08-25 23:08:25,162 INFO    main:   3.3      2    hit(s)  HTML comment / data-* attr / hidden element / <meta> tag
+2026-08-25 23:08:25,162 INFO    main:   3.5      44   hit(s)  JS (inline/external source, console output)
+2026-08-25 23:08:25,162 INFO    main: ------------------------------------------------------------------------------
+2026-08-25 23:08:25,162 INFO    main: SKIPPED LINKS — discovered but deliberately never fetched, by reason
+2026-08-25 23:08:25,162 INFO    main: ------------------------------------------------------------------------------
+2026-08-25 23:08:25,162 INFO    main:   query-trial-cap          1
+2026-08-25 23:08:25,162 INFO    main:       e.g. http://54.214.7.161/report/?page=3
+2026-08-25 23:08:25,162 INFO    main: ------------------------------------------------------------------------------
+2026-08-25 23:08:25,162 INFO    main: POSTPONED-VECTOR TALLY (§4.1) — promote nonzero, drop zero
+2026-08-25 23:08:25,162 INFO    main: ------------------------------------------------------------------------------
+2026-08-25 23:08:25,162 INFO    main:   3.15     97   signal hit(s)  QR codes / encoded images [postponed]
+2026-08-25 23:08:25,162 INFO    main: ==============================================================================
+2026-08-25 23:08:25,164 INFO    main: Audit log: C:\Users\kxu\Desktop\whereIsThePassword\WhereIsThePassword\output\runs\20260825-225749\audit_log.jsonl
+2026-08-25 23:08:25,165 INFO    main: Found-passwords summary: C:\Users\kxu\Desktop\whereIsThePassword\WhereIsThePassword\output\runs\20260825-225749\found_passwords.json

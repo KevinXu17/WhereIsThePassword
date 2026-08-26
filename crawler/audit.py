@@ -8,6 +8,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from .vectors import label_for
+
 logger = logging.getLogger("crawler.audit")
 
 
@@ -47,10 +49,12 @@ class AuditLog:
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "resource": resource,
             "vector": vector,
+            "vector_label": label_for(vector),
             "url_path": urlsplit(resource).path or "/",
             "status": status,
             "password_found": password_found,
             "postponed_signals": postponed_signals or [],
+            "postponed_signal_labels": [label_for(s) for s in (postponed_signals or [])],
         }
         self._fh.write(json.dumps(row, ensure_ascii=False) + "\n")
         self._fh.flush()
@@ -63,8 +67,12 @@ class AuditLog:
                 self.found_passwords[password_found] = {
                     "resource": resource,
                     "vector": vector,
+                    "vector_label": label_for(vector),
                 }
-                logger.info("FOUND %s  (vector %s @ %s)", password_found, vector, resource)
+                logger.info(
+                    "FOUND %s  (vector %s — %s @ %s)",
+                    password_found, vector, label_for(vector), resource,
+                )
 
     def record_many(
         self,
@@ -148,7 +156,9 @@ class AuditLog:
         expected = f"/{expected_password_count}" if expected_password_count else ""
         lines.append(f"Passwords found: {found_n}{expected}")
         for pw, info in self.found_passwords.items():
-            lines.append(f"  {pw}  <- vector {info['vector']} @ {info['resource']}")
+            lines.append(
+                f"  {pw}  <- {info['vector']} ({label_for(info['vector'])}) @ {info['resource']}"
+            )
         if expected_password_count and found_n < expected_password_count:
             lines.append(
                 f"[!] {expected_password_count - found_n} password(s) still missing — "
@@ -167,7 +177,7 @@ class AuditLog:
         lines.append("-" * 78)
         if self.active_vector_hit_counts:
             for vector, n in sorted(self.active_vector_hit_counts.items()):
-                lines.append(f"  {vector:<8} {n} hit(s)")
+                lines.append(f"  {vector:<8} {n:<4} hit(s)  {label_for(vector)}")
         else:
             lines.append("  (none)")
 
@@ -187,7 +197,7 @@ class AuditLog:
         lines.append("-" * 78)
         if self.postponed_signal_counts:
             for vector, n in sorted(self.postponed_signal_counts.items()):
-                lines.append(f"  {vector:<8} {n} signal hit(s)")
+                lines.append(f"  {vector:<8} {n:<4} signal hit(s)  {label_for(vector)}")
         else:
             lines.append("  (no postponed-vector signals observed)")
         lines.append("=" * 78)

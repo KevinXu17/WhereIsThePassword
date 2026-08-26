@@ -1,0 +1,57 @@
+2026-08-25 15:39:27,498 INFO    main: Starting crawl of http://54.214.7.161  (scope: 54.214.7.161)
+2026-08-25 15:39:27,498 INFO    main: Auth: qiwen.xu / (basic auth configured on browser context)
+2026-08-25 15:39:27,498 INFO    main: Target pattern: VISUALPING\{[0-9a-fA-F]{16}\}
+2026-08-25 15:39:27,498 INFO    main: Visit cap: 500  |  query-string trial cap: 2 distinct variant(s) per path, shared across all params (page/list/p/v/ref/... alike)
+2026-08-25 15:39:28,346 INFO    crawler: [1/500] [_root:1] visiting http://54.214.7.161
+2026-08-25 15:39:32,581 INFO    crawler: [2/500] [docs:1] visiting http://54.214.7.161/docs/
+2026-08-25 15:39:34,737 INFO    crawler: [3/500] [report:1] visiting http://54.214.7.161/report/?page=1
+2026-08-25 15:39:36,122 INFO    crawler: [4/500] [wiki:1] visiting http://54.214.7.161/wiki/rule-change/
+2026-08-25 15:39:37,505 INFO    crawler: [5/500] [help:1] visiting http://54.214.7.161/help/?utm_source=internal
+2026-08-25 15:39:39,599 INFO    crawler: [6/500] [notes:1] visiting http://54.214.7.161/notes/
+2026-08-25 15:39:41,590 INFO    crawler: [7/500] [help:2] visiting http://54.214.7.161/help/?v=3
+2026-08-25 15:39:42,929 INFO    crawler: [8/500] [products:1] visiting http://54.214.7.161/products/?hl=en
+2026-08-25 15:39:44,313 INFO    crawler: [9/500] [wiki:2] visiting http://54.214.7.161/wiki/domain-queue-backoff/
+2026-08-25 15:39:45,621 INFO    crawler: [10/500] [docs:2] visiting http://54.214.7.161/docs/upstream-sample-channel/
+2026-08-25 15:39:47,013 INFO    crawler: [11/500] [products:2] visiting http://54.214.7.161/products/
+2026-08-25 15:39:48,369 INFO    crawler: [12/500] [wiki:3] visiting http://54.214.7.161/wiki/shard-schedule/
+2026-08-25 15:39:49,706 INFO    crawler: [13/500] [notes:2] visiting http://54.214.7.161/notes/archive-region/
+2026-08-25 15:39:51,012 INFO    crawler: [14/500] [status:1] visiting http://54.214.7.161/status/eu-region/
+2026-08-25 15:39:52,330 INFO    crawler: [15/500] [wiki:4] visiting http://54.214.7.161/wiki/
+2026-08-25 15:39:53,725 INFO    crawler: [16/500] [docs:3] visiting http://54.214.7.161/docs/change-signal-anchor/
+2026-08-25 15:39:55,105 INFO    crawler: [17/500] [docs:4] visiting http://54.214.7.161/docs/?ref=related
+2026-08-25 15:39:56,507 INFO    crawler: [18/500] [blog:1] visiting http://54.214.7.161/blog/index.html
+2026-08-25 15:39:57,839 INFO    crawler: [19/500] [wiki:5] visiting http://54.214.7.161/wiki/digest-session-ledger/
+2026-08-25 15:40:00,228 INFO    crawler: [20/500] [blog:2] visiting http://54.214.7.161/blog
+2026-08-25 15:40:01,676 INFO    crawler: [21/500] [wiki:6] visiting http://54.214.7.161/wiki/cookie-vector/
+2026-08-25 15:40:03,015 INFO    crawler: [22/500] [help:3] visiting http://54.214.7.161/help/index.html
+2026-08-25 15:40:04,372 INFO    crawler: [23/500] [report:2] visiting http://54.214.7.161/report/?page=2
+2026-08-25 15:40:05,710 INFO    crawler: [24/500] [wiki:7] visiting http://54.214.7.161/wiki/?hl=en
+2026-08-25 15:40:07,094 INFO    crawler: [25/500] [notes:3] visiting http://54.214.7.161/notes/?v=2
+2026-08-25 15:40:08,394 INFO    crawler: [26/500] [blog:3] visiting http://54.214.7.161/blog/baseline-signal-diff
+2026-08-25 15:40:09,788 INFO    crawler: [27/500] [docs:5] visiting http://54.214.7.161/docs/digest-packet/
+2026-08-25 15:40:11,149 INFO    crawler: [28/500] [products:3] visiting http://54.214.7.161/products/backoff-queue-region/
+2026-08-25 15:40:13,022 INFO    crawler: [29/500] [notes:4] visiting http://54.214.7.161/notes/channel-stream/
+2026-08-25 15:40:14,341 INFO    crawler: [30/500] [notes:5] visiting http://54.214.7.161/notes
+2026-08-25 15:40:15,686 INFO    crawler: [31/500] [docs:6] visiting http://54.214.7.161/docs
+2026-08-25 15:40:17,045 INFO    crawler: [32/500] [products:4] visiting http://54.214.7.161/products
+2026-08-25 15:40:18,390 INFO    crawler: [33/500] [wiki:8] visiting http://54.214.7.161/wiki/ledger-header-object/?utm_source=internal
+2026-08-25 15:40:19,710 INFO    crawler: [34/500] [help:4] visiting http://54.214.7.161/help
+2026-08-25 15:40:21,055 INFO    crawler: [35/500] [wiki:9] visiting http://54.214.7.161/wiki/filter-upstream/index.html
+2026-08-25 15:40:22,412 INFO    crawler: [36/500] [docs:7] visiting http://54.214.7.161/docs/packet-replica-packet/
+2026-08-25 15:40:23,808 INFO    crawler: [37/500] [blog:4] visiting http://54.214.7.161/blog/?utm_source=sidebar
+2026-08-25 15:40:25,191 INFO    crawler: [38/500] [wiki:10] visiting http://54.214.7.161/wiki/?ref=nav
+2026-08-25 15:40:26,532 INFO    crawler: [39/500] [blog:5] visiting http://54.214.7.161/blog/threshold-detect-mirror
+2026-08-25 15:40:27,930 INFO    crawler: [40/500] [blog:6] visiting http://54.214.7.161/blog/?ref=nav
+2026-08-25 15:40:29,302 INFO    crawler: [41/500] [products:5] visiting http://54.214.7.161/products/retry-compare/?utm_source=internal
+2026-08-25 15:40:30,698 INFO    crawler: [42/500] [notes:6] visiting http://54.214.7.161/notes/?utm_source=internal
+2026-08-25 15:40:32,085 INFO    crawler: [43/500] [docs:8] visiting http://54.214.7.161/docs/sync-resolver-ticket/
+2026-08-25 15:40:33,403 INFO    crawler: [44/500] [wiki:11] visiting http://54.214.7.161/wiki/selector-socket-digest/
+2026-08-25 15:40:34,724 INFO    crawler: [45/500] [docs:9] visiting http://54.214.7.161/docs/visual-shard-visual/
+2026-08-25 15:40:36,079 INFO    crawler: [46/500] [blog:7] visiting http://54.214.7.161/blog/latency-pipeline-digest/?utm_source=internal
+2026-08-25 15:40:37,440 INFO    crawler: [47/500] [docs:10] visiting http://54.214.7.161/docs/object-header-interval/?utm_source=internal
+2026-08-25 15:40:38,772 INFO    crawler: [48/500] [notes:7] visiting http://54.214.7.161/notes/embed-packet/index.html
+2026-08-25 15:40:40,155 INFO    crawler: [49/500] [products:6] visiting http://54.214.7.161/products/gateway-visual
+2026-08-25 15:40:41,615 INFO    crawler: [50/500] [blog:8] visiting http://54.214.7.161/blog/origin-element-sync/
+2026-08-25 15:40:42,954 INFO    crawler: [51/500] [products:7] visiting http://54.214.7.161/products/handshake-backoff-fragment/?v=9
+2026-08-25 15:40:44,285 INFO    crawler: [52/500] [products:8] visiting http://54.214.7.161/products/anchor-trend/?utm_source=sidebar
+2026-08-25 15:40:45,710 INFO    crawler: [53/500] [products:9] visiting http://54.214.7.161/products/?utm_source=sidebar

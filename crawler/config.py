@@ -19,10 +19,13 @@ if not TARGET_URL:
 # §2.2 — cap total visits to avoid unbounded/infinite crawling.
 MAX_VISITS = 500
 
-# §2.4 — pagination-style params get only this many trial values. Applied to
-# every query param generically (see PaginationLimiter), not just literal
-# pagination names — see its docstring for why.
+# §2.4 — pagination-style params get only this many trial values.
 PAGINATION_TRIALS = 2
+
+# Named pagination-style params get their own dedicated trial budget,
+# isolated from decorative/tracking params (see PaginationLimiter's
+# docstring) so neither can starve the other.
+PAGINATION_PARAM_NAMES = {"page", "p", "pg", "offset"}
 
 # Only used for the human-readable end-of-run summary ("N/8 passwords
 # found") — the challenge homepage states this count outright. Not used for
@@ -36,6 +39,22 @@ POST_LOAD_SETTLE_MS = 400
 MAX_SCROLL_ROUNDS = 6
 MAX_CLICK_CANDIDATES_PER_PAGE = 25
 MAX_FORMS_PER_PAGE = 15
+
+# A `<select>` in a form previously only ever got submitted with its first
+# option (dummy_value() picked one value and stopped there) — any page only
+# reachable via a *different* option value was silently never visited. Mirror
+# §2.4's pagination-trial-cap spirit: try more than one value, but cap it so
+# a form with several dropdowns can't explode into a huge submission fan-out.
+MAX_SELECT_OPTION_TRIALS = 6
+
+# §3.33 — GeoIP-gated pages. Confirmed (via a live proxy test) to do a real
+# GeoIP lookup against the actual TCP source IP — not a client-supplied
+# header, so there's no generic detection heuristic worth writing (a 403
+# with region-flavored body text is easy to misidentify on other sites).
+# Hardcoded by URL path on purpose: this is a known, specific dead end on
+# *this* target, not a general capability the crawler should try everywhere.
+GEO_BYPASS_PATHS = {"/status/eu-region/"}
+GEO_BYPASS_PROXY = os.environ.get("GEO_BYPASS_PROXY", "").strip()
 
 OUTPUT_DIR = ROOT / "output"
 AUDIT_LOG_PATH = OUTPUT_DIR / "audit_log.jsonl"

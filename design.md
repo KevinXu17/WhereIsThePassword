@@ -56,7 +56,7 @@ that a plain HTML/`<a>` parser would miss.
 
 **`<iframe src>`**
 - Where to look: Embedded frames
-- How to extract: Parse `src` attribute; recurse into frame's own DOM via Playwright's `frame` objects
+- How to extract: Parse `src` attribute; recurse into frame's own DOM via Playwright's `frame` objects. Recursion means the *full* §3 extraction pass, not just a raw-HTML regex scan — each frame gets its own rendered-DOM scan (§3.29), `localStorage`/`sessionStorage`/cookies (§3.6/§3.7), IndexedDB (§3.6), and Cache Storage (§3.30) walk via `frame.evaluate(...)`, since a frame's client-side state is its own and a main-frame-only scan would never see it
 
 **Redirects**
 - Where to look: 3xx `Location` header, `<meta http-equiv="refresh">`, JS `location.href`/`location.assign()`/`window.open()`
@@ -161,8 +161,8 @@ Where in the server's response a `VISUALPING{...}` token might live.
 - Detection method: Fetch and regex scan raw JS source; capture console messages via Playwright's `page.on('console')`. **Caveat:** this only catches literal source tokens — a password built at runtime (`String.fromCharCode(...)`, `atob(...)`, concatenation/XOR) won't match; fall back to diffing `window`'s own keys before/after load, or rely on 3.6 (active) / 3.8 (postponed) catching the constructed value once it lands in storage/state
 
 **3.6 — Client-side storage**
-- Where: `localStorage`, `sessionStorage`, `IndexedDB` — set by JS after load, invisible to any HTTP-level capture
-- Detection method: `page.evaluate()` to dump `localStorage`/`sessionStorage` (trivial, synchronous); regex scan the dump. **`IndexedDB` is meaningfully more work** — async: enumerate `indexedDB.databases()`, open each, walk every object store via a cursor
+- Where: `localStorage`, `sessionStorage`, `IndexedDB` — set by JS after load, invisible to any HTTP-level capture. Also folds in `window.name` and `history.state`: both are JS-writable global state that can carry a value across navigations without ever touching the usual storage buckets — cheap to grab in the same pass
+- Detection method: `page.evaluate()` to dump `localStorage`/`sessionStorage`/`window.name`/`history.state` (trivial, synchronous); regex scan the dump. **`IndexedDB` is meaningfully more work** — async: enumerate `indexedDB.databases()`, open each, walk every object store via a cursor. Also see §3.30 (Cache Storage) — a related but distinct client-side storage API
 
 **3.7 — Cookies (JS-visible)**
 - Where: `document.cookie` — can differ from the `Set-Cookie` header if JS sets/rotates cookies client-side
@@ -196,6 +196,26 @@ Where in the server's response a `VISUALPING{...}` token might live.
 - Where: Banner/badge PNG/JPG (`<img>` or background-image assets) — password drawn as pixels, not characters
 - Detection method: Fetch image, run OCR (`pytesseract`) with a character whitelist (`VISUALPING{}0-9a-fA-F`) and image preprocessing (upscale/threshold) to reduce `0`/`O`/`1`/`l`/`I` misreads, regex scan the extracted text
 
+**3.17 — Web app manifest**
+- Where: `manifest.json` linked via `<link rel="manifest">` (see §2.6)
+- Detection method: Fetch and regex scan the manifest JSON body itself, not just the URLs it lists
+
+**3.20 — Canvas-drawn text**
+- Where: `<canvas>` elements (`fillText`/`strokeText`, no DOM text node)
+- Detection method: Tag every `<canvas>` in the DOM harvest, screenshot each one individually via its Playwright locator, and OCR the screenshot (same OCR pipeline as 3.19)
+
+**3.21 — Custom web-font glyph substitution**
+- Where: `@font-face` with remapped `unicode-range` — copied/parsed DOM text ≠ what's visually rendered — whether the rule is inline (`<style>`) or in a linked stylesheet
+- Detection method: Cheap presence check (regex for `@font-face { ... unicode-range: ... }`) run against both inline `<style>` text and every fetched CSS file; when the condition is seen anywhere on the page, take a full-page screenshot and OCR it, regex-scanning the result. (Simplified from "compare OCR against `textContent` per element" to "OCR the whole page when the trigger condition fires" — cheaper, and the OCR pass only runs on pages that actually show the signal, not every page.)
+
+**3.22 — SVG text-as-paths**
+- Where: `<path>` shapes forming letters, no real `<text>` node
+- Detection method: Tag every inline `<svg>` that has a `<path>` but no `<text>`/`<tspan>` descendant, screenshot each individually, and OCR the screenshot
+
+**3.25 — Strings inside binary files**
+- Where: favicon.ico, font files, `.wasm` modules, and anything else whose response `Content-Type` isn't claimed by another vector
+- Detection method: Decode the raw response bytes as latin1 (1:1 byte↔codepoint, so embedded ASCII text survives regardless of surrounding binary data) and regex scan the result — equivalent to a `strings`-style scan without needing a separate run-extraction pass
+
 **3.27 — URL string itself**
 - Where: Path segments, query-string values, and fragment of every discovered URL (e.g. `/secret/VISUALPING{...}`, `?token=...`)
 - Detection method: Regex scan the URL string at enqueue time, before even fetching it
@@ -203,6 +223,37 @@ Where in the server's response a `VISUALPING{...}` token might live.
 **3.28 — HTTP status line reason phrase**
 - Where: The custom text after the status code (`200 VISUALPING{...}` instead of `200 OK`) — servers can set this arbitrarily
 - Detection method: Read `response.statusText()` on every response; regex scan it the same as headers (3.1)
+
+#### Added after a follow-up code review (beyond the original numbering)
+
+The rows below weren't in the original design — a later review of the
+implementation identified real gaps that §3.1–3.28 don't cover: content
+that only ever exists after JS has already run, client-side storage
+mechanisms beyond `localStorage`/`sessionStorage`/IndexedDB, iframe
+content that a main-frame-only scan would silently miss, and (§3.33) a
+page gated behind a real access-control check rather than anything a
+passive scan could ever observe.
+
+**3.29 — Rendered DOM (post-JS), including open shadow DOM**
+- Where: `document.documentElement.outerHTML` / `document.body.innerText` after the page settles — content a script inserted or mutated in (SPA routing, `element.innerHTML = ...`, `history.pushState` without a full navigation) never appears in §3.2's raw server response at all. Open shadow roots also don't serialize into either property and need their own walk; closed shadow roots are genuinely unreachable from outside the page, a real browser limitation rather than a gap here
+- Detection method: `page.evaluate()` after load to grab `outerHTML`/`innerText`, plus a recursive walk collecting `textContent` and attribute values out of every open `shadowRoot` found anywhere in the tree; regex scan all of it the same as raw HTML
+
+**3.30 — Cache Storage API**
+- Where: `caches.open(name).then(c => c.put(request, response))` — a service worker or page script can stash an arbitrary response body here; reading it back (`cache.match()`) never makes a network request, so response interception (§3.11) never sees it, and it's a distinct API from IndexedDB (§3.6)
+- Detection method: `caches.keys()` to enumerate every named cache, `cache.keys()` + `cache.match()` to walk every entry, `response.text()` to read the body; regex scan each
+
+**3.31 — `blob:`/`data:` URL content**
+- Where: `URL.createObjectURL(new Blob([...]))` assigned to a `src`/`href`, or a literal `data:` URI — neither is ever requested over the network, so §3.11's response interception can't see either one
+- Detection method: `data:` URLs are decoded directly (base64 or percent-encoded payload, parsed from the string itself); `blob:` URLs are only valid inside the page that created them, so they're read back via an in-page `fetch(blobUrl).then(r => r.text())` call before the page navigates away
+
+**3.32 — Server-Sent Events (postponed)**
+- Where: An `EventSource`-driven `text/event-stream` connection — like WebSocket (§3.12), a deliberately long-lived, open-ended response
+- Detection method: Signal only, same treatment as §3.12 — a normal `resp.body()` await could hang indefinitely waiting for a stream that's never meant to end, so the body is never read; presence is detected from the `Content-Type` header alone
+
+**3.33 — GeoIP-gated page**
+- Where: `/status/eu-region/` returns 403 with a body that names the visitor's *actual* resolved country ("Your IP is from Canada", "...from Germany", etc.) — confirmed by live-testing `X-Forwarded-For`, `X-Real-IP`, `True-Client-IP`, `CF-IPCountry`, `X-Country`/`X-Country-Code`, `X-GeoIP-Country`, `X-AppEngine-Country`, `X-Client-Country`, `X-Forwarded-Country`, and `Accept-Language: de-DE`, individually and combined — every attempt still 403'd with the same "Canada" body, meaning this is a real GeoIP lookup against the actual TCP connection's source IP, not a header the app trusts. Confirmed genuine by routing the *same* request through a real German-egress proxy instead: 200, with the page body containing `VISUALPING{5488187886a5755a}` literally wrapped
+- Detection method: Not a generic "detect and bypass any geo-block" capability — deliberately hardcoded to this one confirmed URL (`GEO_BYPASS_PATHS` in `config.py`), since a 403-with-region-flavored-text heuristic would misfire on unrelated sites. When `GEO_BYPASS_PROXY` is configured (`.env`, unset by default — a no-op otherwise), the crawler re-fetches *just* this URL through a separate, throwaway `APIRequestContext` configured with that proxy, kept fully isolated from the main browser context so the egress IP (and therefore the GeoIP result) never changes for anything else the crawl fetches
+- Caveat: public proxies are ephemeral — a working one today may be dead tomorrow. This vector is inherently "confirm the proxy is still live before relying on it," not a permanent automated fix. Whatever proxy is configured receives the site's Basic Auth credentials in plaintext; only use one you trust
 
 ##### 3.14 breakdown — image metadata by format
 
@@ -274,22 +325,6 @@ implementation pass. Revisit once the vectors above are working.
 - Where: Data visually encoded in an image rather than stored as text
 - Detection method: Decode QR/barcodes (e.g. `pyzbar`) from fetched images; regex scan decoded text
 
-**3.17 — Web app manifest**
-- Where: `manifest.json` linked via `<link rel="manifest">` (see §2.6, also postponed)
-- Detection method: Fetch and regex scan the manifest JSON body itself, not just the URLs it lists
-
-**3.20 — Canvas-drawn text**
-- Where: `<canvas>` elements (`fillText`/`strokeText`, no DOM text node)
-- Detection method: Screenshot the canvas region and OCR it, or instrument/intercept `fillText` calls via `page.evaluate`
-
-**3.21 — Custom web-font glyph substitution**
-- Where: `@font-face` with remapped `unicode-range` — copied/parsed DOM text ≠ what's visually rendered
-- Detection method: Screenshot + OCR the element and compare against its raw `textContent`; trust OCR when they diverge
-
-**3.22 — SVG text-as-paths**
-- Where: `<path>` shapes forming letters, no real `<text>` node
-- Detection method: Screenshot + OCR, since there's no text node to parse
-
 **3.23 — Audio-encoded password**
 - Where: `<audio src>` or linked audio files (spoken TTS, Morse/DTMF tones)
 - Detection method: Speech-to-text (e.g. `speech_recognition`) or tone/Morse decode; regex scan the transcript
@@ -297,10 +332,6 @@ implementation pass. Revisit once the vectors above are working.
 **3.24 — Steganography in image pixel data**
 - Where: Any fetched image (LSB-style hidden payload)
 - Detection method: Run steg-extraction (e.g. `stegano`, `zsteg`) as a fallback on images that don't otherwise yield a hit
-
-**3.25 — Strings inside binary files**
-- Where: favicon.ico, font files, `.wasm` modules — anything fetched regardless of declared Content-Type
-- Detection method: `strings`-style printable-ASCII scan over the raw bytes of every fetched resource, not filtered by content-type
 
 **3.26 — Full-page screenshot + OCR**
 - Where: Rendered page, after each page settles
@@ -344,22 +375,6 @@ whole crawl is evidence it isn't needed for this target.
 - Signal: page contains any `<img>` at all (§3.14/§3.19 already enumerate these)
 - Cost: free, but **weak** — presence of *an* image doesn't mean it's a QR code; treat a nonzero count as "worth manually sampling a few," not a precise trigger
 
-**3.17 — Web app manifest**
-- Signal: `<link rel="manifest">` present in `<head>` (§2.6, postponed)
-- Cost: free — tag presence needs no fetch; confirming its JSON body is a single small extra request if you want to go further
-
-**3.20 — Canvas-drawn text**
-- Signal: DOM contains one or more `<canvas>` elements (`document.querySelectorAll('canvas').length > 0`)
-- Cost: free — one DOM query per page via `page.evaluate`
-
-**3.21 — Custom web-font glyph substitution**
-- Signal: any fetched CSS contains `@font-face` with a `unicode-range` descriptor
-- Cost: free — regex over CSS text already fetched for §3.4, no extra request
-
-**3.22 — SVG text-as-paths**
-- Signal: DOM contains inline `<svg>` with `<path>` children but no `<text>`/`<tspan>` descendant
-- Cost: free — one DOM query per page
-
 **3.23 — Audio-encoded password**
 - Signal: page contains `<audio src>` or links to an audio file extension (`.mp3`/`.wav`/`.ogg`/`.m4a`)
 - Cost: free — same header/extension check pattern as 3.13
@@ -367,10 +382,6 @@ whole crawl is evidence it isn't needed for this target.
 **3.24 — Steganography in image pixel data**
 - Signal: none reliable — every image is a hypothetical candidate, so presence alone is meaningless as a promotion trigger
 - Recommendation: don't promote from a signal; only justified as a manual last resort on a specific page already confirmed (via ground truth) to hold a password that no other vector — including 3.15 — found
-
-**3.25 — Strings inside binary files**
-- Signal: a fetched resource returned a binary `Content-Type` (font, `.ico`, `.wasm`) not already claimed by another vector
-- Cost: free — content-type is already known from the response
 
 **3.26 — Full-page screenshot + OCR**
 - Signal: none presence-based — it's the general catch-all, always "applicable" everywhere
@@ -381,14 +392,26 @@ whole crawl is evidence it isn't needed for this target.
 - **Language:** Python
 - **Dependencies (active — needed for the current §3 vectors):**
   - `playwright` — browser automation: rendering, click-through nav, network
-    interception (3.1–3.3, 3.6, 3.7, 3.9–3.11, 3.18), screenshots (3.19)
+    interception (3.1–3.3, 3.6, 3.7, 3.9–3.11, 3.18), screenshots (3.19,
+    3.20, 3.21, 3.22)
   - `python-dotenv` — loads credentials from `.env`, keeps them out of git
   - `Pillow` — image decoding, EXIF metadata (3.14), preprocessing
-    (upscale/threshold) before OCR (3.19)
-  - `pytesseract` — OCR for rendered text in images (3.19); requires the
-    Tesseract OCR binary installed on the host (not a pip package)
-  - stdlib `re`/`json` cover regex scanning and JSON parsing (3.2–3.7,
-    3.9–3.11) — no extra dependency needed
+    (upscale/threshold) before OCR (3.19, 3.20, 3.21, 3.22)
+  - `pytesseract` — OCR for rendered text in images and screenshots (3.19,
+    3.20, 3.21, 3.22); requires the Tesseract OCR binary installed on the
+    host (not a pip package)
+  - stdlib `re`/`json`/`base64`/`urllib.parse`/`html` cover regex scanning,
+    JSON parsing, and the decode-then-rescan pass for base64/`atob()`/
+    char-code arrays/percent-encoding/CSS hex-escapes/HTML entities/JS
+    string escapes (3.2–3.7, 3.9–3.11, 3.17, 3.25) — no extra dependency
+    needed
+  - A configured HTTP/SOCKS proxy with German egress (3.33, optional,
+    `GEO_BYPASS_PROXY` in `.env`) — not a Python dependency, an external
+    resource; unset by default, so this vector is a no-op until one is
+    provided. Public proxies are ephemeral (working one day, dead the
+    next) and receive the site's Basic Auth credentials in plaintext —
+    only point this at a proxy you trust, and expect to have to find a
+    fresh one periodically
 
 - **Dependencies (postponed — only needed if/when the corresponding §3
   postponed vector is activated):**

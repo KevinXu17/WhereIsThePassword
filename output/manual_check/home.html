@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Visualping Crawler Challenge — Visualping Challenge</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<script src="/static/js/main.js" defer></script>
+</head>
+<body>
+<header>
+  <a href="/" class="logo">Visualping Challenge</a>
+  <nav><a href="/docs/?ref=related">Docs</a> <a href="/blog/index.html">Blog</a> <a href="/products/">Products</a> <a href="/help/?utm_source=internal">Help</a> <a href="/notes/">Notes</a> <a href="/wiki/">Wiki</a></nav>
+  <nav class="extra" data-extra-nav aria-label="quick links"></nav>
+</header>
+<main>
+  <h1>Visualping Crawler Challenge</h1>
+  
+<section class="rules">
+  <h2>How this works</h2>
+  <p>Somewhere on this site, <strong>eight passwords</strong> are hidden.
+  Each one looks exactly like this worked example:</p>
+  <pre><code>VISUALPING{0000deadbeef0000}</code></pre>
+  <p>That is: the literal string <code>VISUALPING{</code>, sixteen hexadecimal
+  characters, then <code>}</code>. The example above is <em>not</em> one of the
+  eight — it is only here to show you the format.</p>
+  <ul>
+    <li>Every password is reachable from this page — a real browser can click
+        its way to every page on this site. There is nothing to guess: no
+        hidden URLs, no robots.txt tricks. But not every link is an
+        <code>&lt;a&gt;</code> tag in the HTML source.</li>
+    <li>Passwords are not always stored the way you'd first expect — look at
+        everything the server gives you.</li>
+    <li>Keep sending your HTTP Basic Auth credentials on every request.</li>
+    <li>Passwords that appear in HTTP response headers are staging placeholders
+        and are not qualified &mdash; ignore them.</li>
+  </ul>
+  <p>The authoritative instructions are in your invite email. If this page and
+  the email ever disagree, the email wins.</p>
+  <p>Operational data: browse the live
+  <a href="/report/?page=1">monitoring report</a> or the
+  <a href="/status/eu-region/">regional availability status</a>.</p>
+</section>
+
+  <script>
+  (function () {
+    var list = document.querySelector('.rules ul');
+    if (!list) return;
+    var items = list.querySelectorAll(':scope > li');
+    if (items.length >= 4) items[3].remove();
+  })();
+</script>
+  <section class="related"><h2>Sections</h2>
+<ul>
+    <li><a href="/docs/">Docs</a></li>
+    <li><a href="/blog/index.html">Blog</a></li>
+    <li><a href="/products/?hl=en">Products</a></li>
+    <li><a href="/help/?v=3">Help</a></li>
+    <li><a href="/notes/">Notes</a></li>
+    <li><a href="/wiki/">Wiki</a></li>
+</ul></section>
+</main>
+<footer>
+  <p>Internal knowledge base &middot; generated content &middot; not indexed.</p>
+</footer>
+</body>
+</html>
